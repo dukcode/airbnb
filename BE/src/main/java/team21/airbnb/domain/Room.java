@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,17 +36,17 @@ public class Room {
 
     private String name;
 
-    private int maxNumOfGuests;
+    private Integer maxNumOfGuests;
 
-    private int numOfBedrooms;
+    private Integer numOfBedrooms;
 
-    private int numOfBaths;
+    private Integer numOfBaths;
 
-    private int cleaningFee;
+    private Integer cleaningFee;
 
-    private int roomCharge;
+    private Integer roomCharge;
 
-    private int weeklyDiscountPercent;
+    private Integer weeklyDiscountPercent;
 
     @Embedded
     private Location location;
@@ -53,5 +54,23 @@ public class Room {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "host_id")
     private User host;
+
+    @Builder
+    public Room(RoomType roomType, SpaceType spaceType, String description, String name,
+            int maxNumOfGuests, int numOfBedrooms, int numOfBaths, int cleaningFee, int roomCharge,
+            int weeklyDiscountPercent, Location location, User host) {
+        this.roomType = roomType;
+        this.spaceType = spaceType;
+        this.description = description;
+        this.name = name;
+        this.maxNumOfGuests = maxNumOfGuests;
+        this.numOfBedrooms = numOfBedrooms;
+        this.numOfBaths = numOfBaths;
+        this.cleaningFee = cleaningFee;
+        this.roomCharge = roomCharge;
+        this.weeklyDiscountPercent = weeklyDiscountPercent;
+        this.location = location;
+        this.host = host;
+    }
 
 }
