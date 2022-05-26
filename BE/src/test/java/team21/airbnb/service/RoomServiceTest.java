@@ -41,7 +41,7 @@ class RoomServiceTest {
         assertThat(roomChargeDistribution.getGraph()
                 .get(room1.getDistributedRoomCharge(RoomService.DISTRIBUTION_UNIT))).isEqualTo(2);
         assertThat(roomChargeDistribution.getGraph()
-                .get(room3.getDistributedRoomCharge(RoomService.DISTRIBUTION_UNIT))).isEqualTo(2);
+                .get(room3.getDistributedRoomCharge(RoomService.DISTRIBUTION_UNIT))).isEqualTo(1);
     }
 
 
