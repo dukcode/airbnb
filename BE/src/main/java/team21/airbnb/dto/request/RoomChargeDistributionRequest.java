@@ -1,11 +1,12 @@
 package team21.airbnb.dto.request;
 
 import java.time.LocalDate;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RoomChargeDistributionRequest {
 
     private LocalDate checkInDate;
