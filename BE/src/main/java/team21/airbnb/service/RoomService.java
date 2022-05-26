@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team21.airbnb.domain.Room;
+import team21.airbnb.dto.request.RoomChargeDistributionRequest;
 import team21.airbnb.dto.response.RoomChargeDistributionResponse;
 import team21.airbnb.repository.RoomRepository;
 
@@ -19,8 +20,12 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
 
-    public RoomChargeDistributionResponse getRoomChargeDistribution() {
-        List<Room> rooms = roomRepository.findAll();
+    public RoomChargeDistributionResponse getRoomChargeDistribution(
+            RoomChargeDistributionRequest roomChargeDistributionRequest) {
+        List<Room> rooms = roomRepository.findAvailableRoomsBetween(
+                roomChargeDistributionRequest.getCheckInDate(),
+                roomChargeDistributionRequest.getCheckOutDate());
+
         Map<Integer, Integer> graph = new HashMap<>();
         int maxRoomCharge = Integer.MIN_VALUE;
         int minRoomCharge = Integer.MAX_VALUE;
