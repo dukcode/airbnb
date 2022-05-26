@@ -8,7 +8,7 @@ import team21.airbnb.service.RoomService;
 
 @RestController
 @RequiredArgsConstructor
-public class HomeController {
+public class RoomController {
 
     private final RoomService roomService;
 

@@ -17,8 +17,8 @@ import team21.airbnb.domain.Room;
 import team21.airbnb.dto.response.RoomChargeDistributionResponse;
 import team21.airbnb.service.RoomService;
 
-@WebMvcTest(HomeController.class)
-class HomeControllerTest {
+@WebMvcTest(RoomController.class)
+class RoomControllerTest {
 
     public static final int MIN_ROOM_CHARGE = 10005;
     public static final int MAX_ROOM_CHARGE = MIN_ROOM_CHARGE + 1000;
