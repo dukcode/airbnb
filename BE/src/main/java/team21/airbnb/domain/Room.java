@@ -58,8 +58,9 @@ public class Room {
 
     @Builder
     public Room(RoomType roomType, SpaceType spaceType, String description, String name,
-            int maxNumOfGuests, int numOfBedrooms, int numOfBaths, int cleaningFee, int roomCharge,
-            int weeklyDiscountPercent, Location location, User host) {
+            Integer maxNumOfGuests, Integer numOfBedrooms, Integer numOfBaths,
+            Integer cleaningFee, Integer roomCharge, Integer weeklyDiscountPercent,
+            Location location, User host) {
         this.roomType = roomType;
         this.spaceType = spaceType;
         this.description = description;
@@ -73,5 +74,4 @@ public class Room {
         this.location = location;
         this.host = host;
     }
-
 }
