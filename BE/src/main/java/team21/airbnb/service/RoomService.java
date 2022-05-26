@@ -38,4 +38,10 @@ public class RoomService {
         return new RoomChargeDistributionResponse(minRoomCharge, maxRoomCharge, graph);
     }
 
+    @Transactional
+    public Long save(Room room) {
+        // TODO : parameter DTO 로 받기, Host 추가
+        return roomRepository.save(room);
+    }
+
 }
