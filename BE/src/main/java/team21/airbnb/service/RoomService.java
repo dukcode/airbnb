@@ -13,7 +13,7 @@ import team21.airbnb.repository.RoomRepository;
 @Transactional(readOnly = true)
 public class RoomService {
 
-    public static final double DIGIT = 10.0;
+    public static final int DISTRIBUTION_RANGE = 10;
 
     private final RoomRepository roomRepository;
 
@@ -32,7 +32,7 @@ public class RoomService {
             maxRoomCharge = Math.max(maxRoomCharge, roomCharge);
             minRoomCharge = Math.min(minRoomCharge, roomCharge);
 
-            graph.merge((int) (Math.ceil(roomCharge / DIGIT) * DIGIT), 1, Integer::sum);
+            graph.merge(room.getDistributedRoomCharge(DISTRIBUTION_RANGE), 1, Integer::sum);
         }
 
         return new RoomChargeDistributionResponse(minRoomCharge, maxRoomCharge, graph);

@@ -25,7 +25,7 @@ class RoomServiceTest {
     public void getRoomChargeDistributionTest() {
         // given
         Room room1 = Room.builder().name("room1").roomCharge(MIN_ROOM_CHARGE).build();
-        Room room2 = Room.builder().name("room2").roomCharge(ceil(MIN_ROOM_CHARGE)).build();
+        Room room2 = Room.builder().name("room2").roomCharge(MIN_ROOM_CHARGE).build();
         Room room3 = Room.builder().name("room3").roomCharge(MAX_ROOM_CHARGE).build();
 
         roomRepository.save(room1);
@@ -38,12 +38,11 @@ class RoomServiceTest {
         // then
         assertThat(roomChargeDistribution.getMinRoomCharge()).isEqualTo(MIN_ROOM_CHARGE);
         assertThat(roomChargeDistribution.getMaxRoomCharge()).isEqualTo(MAX_ROOM_CHARGE);
-        assertThat(roomChargeDistribution.getGraph().get(ceil(MIN_ROOM_CHARGE))).isEqualTo(2);
-        assertThat(roomChargeDistribution.getGraph().get(ceil(MAX_ROOM_CHARGE))).isEqualTo(1);
+        assertThat(roomChargeDistribution.getGraph()
+                .get(room1.getDistributedRoomCharge(RoomService.DISTRIBUTION_RANGE))).isEqualTo(2);
+        assertThat(roomChargeDistribution.getGraph()
+                .get(room3.getDistributedRoomCharge(RoomService.DISTRIBUTION_RANGE))).isEqualTo(2);
     }
 
-    private int ceil(int num) {
-        return (int) (Math.ceil(num / RoomService.DIGIT) * RoomService.DIGIT);
-    }
 
 }
