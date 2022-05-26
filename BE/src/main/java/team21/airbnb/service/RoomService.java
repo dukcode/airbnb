@@ -3,6 +3,7 @@ package team21.airbnb.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team21.airbnb.domain.Room;
@@ -11,15 +12,12 @@ import team21.airbnb.repository.RoomRepository;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class RoomService {
 
     public static final int DISTRIBUTION_RANGE = 10;
 
     private final RoomRepository roomRepository;
-
-    public RoomService(RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
-    }
 
     public RoomChargeDistributionResponse getRoomChargeDistribution() {
         List<Room> rooms = roomRepository.findAll();
