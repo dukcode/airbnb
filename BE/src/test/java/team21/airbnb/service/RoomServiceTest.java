@@ -39,9 +39,9 @@ class RoomServiceTest {
         assertThat(roomChargeDistribution.getMinRoomCharge()).isEqualTo(MIN_ROOM_CHARGE);
         assertThat(roomChargeDistribution.getMaxRoomCharge()).isEqualTo(MAX_ROOM_CHARGE);
         assertThat(roomChargeDistribution.getGraph()
-                .get(room1.getDistributedRoomCharge(RoomService.DISTRIBUTION_RANGE))).isEqualTo(2);
+                .get(room1.getDistributedRoomCharge(RoomService.DISTRIBUTION_UNIT))).isEqualTo(2);
         assertThat(roomChargeDistribution.getGraph()
-                .get(room3.getDistributedRoomCharge(RoomService.DISTRIBUTION_RANGE))).isEqualTo(2);
+                .get(room3.getDistributedRoomCharge(RoomService.DISTRIBUTION_UNIT))).isEqualTo(2);
     }
 
 

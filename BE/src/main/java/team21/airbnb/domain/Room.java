@@ -75,8 +75,8 @@ public class Room {
         this.host = host;
     }
 
-    public int getDistributedRoomCharge(int distribution_range) {
+    public int getDistributedRoomCharge(int distributionUnit) {
         // 올림
-        return ((roomCharge + (distribution_range - 1)) / distribution_range) * distribution_range;
+        return ((roomCharge + (distributionUnit - 1)) / distributionUnit) * distributionUnit;
     }
 }
