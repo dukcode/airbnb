@@ -22,8 +22,8 @@ public class RoomRepository {
         return em.createQuery(
                         "select r from Room r where not exists"
                                 + " (select b from Booking b"
-                                + " where (b.room = r) and not ((b.checkOutDate <= :checkInDate)"
-                                + " or (b.checkInDate >= :checkOutDate)))",
+                                + " where (b.room = r) and not ((b.checkOutDate < :checkInDate)"
+                                + " or (b.checkInDate > :checkOutDate)))",
                         Room.class)
                 .setParameter("checkInDate", checkInDate)
                 .setParameter("checkOutDate", checkOutDate)

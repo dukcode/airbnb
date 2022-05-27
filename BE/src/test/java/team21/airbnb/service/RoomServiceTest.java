@@ -41,10 +41,10 @@ class RoomServiceTest {
         bookingRepository.save(Booking.builder().room(room1).checkInDate(LocalDate.of(2022, 5, 5))
                 .checkOutDate(LocalDate.of(2022, 5, 10)).build());
         // available
-        bookingRepository.save(Booking.builder().room(room2).checkInDate(LocalDate.of(2022, 5, 4))
-                .checkOutDate(LocalDate.of(2022, 5, 5)).build());
+        bookingRepository.save(Booking.builder().room(room2).checkInDate(LocalDate.of(2022, 5, 3))
+                .checkOutDate(LocalDate.of(2022, 5, 4)).build());
         // available
-        bookingRepository.save(Booking.builder().room(room3).checkInDate(LocalDate.of(2022, 5, 10))
+        bookingRepository.save(Booking.builder().room(room3).checkInDate(LocalDate.of(2022, 5, 11))
                 .checkOutDate(LocalDate.of(2022, 5, 11)).build());
 
         // when

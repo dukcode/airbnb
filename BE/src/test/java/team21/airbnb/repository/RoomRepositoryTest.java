@@ -73,10 +73,10 @@ class RoomRepositoryTest {
 
         List<Room> findNotEmptyList1 = roomRepository.findAvailableRoomsBetween(
                 LocalDate.of(2022, 5, 1)
-                , LocalDate.of(2022, 5, 5));
+                , LocalDate.of(2022, 5, 4));
 
         List<Room> findNotEmptyList2 = roomRepository.findAvailableRoomsBetween(
-                LocalDate.of(2022, 5, 10)
+                LocalDate.of(2022, 5, 11)
                 , LocalDate.of(2022, 5, 15));
 
         // then
