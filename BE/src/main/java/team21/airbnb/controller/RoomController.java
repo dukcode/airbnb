@@ -20,6 +20,4 @@ public class RoomController {
         return roomService.getAvailableRoomCharges(checkInDate, checkoutDate);
     }
 
-    @GetMapping
-    public
 }
