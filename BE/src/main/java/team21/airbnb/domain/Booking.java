@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -46,4 +47,17 @@ public class Booking {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Builder
+    public Booking(LocalDate checkInDate, LocalDate checkOutDate, Integer numOfAdults,
+            Integer numOfChildren, Integer numOfInfants, BookingStatus status,
+            Room room, User user) {
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.numOfAdults = numOfAdults;
+        this.numOfChildren = numOfChildren;
+        this.numOfInfants = numOfInfants;
+        this.status = status;
+        this.room = room;
+        this.user = user;
+    }
 }

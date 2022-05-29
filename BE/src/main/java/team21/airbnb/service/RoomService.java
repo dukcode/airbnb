@@ -3,26 +3,29 @@ package team21.airbnb.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team21.airbnb.domain.Room;
+import team21.airbnb.dto.request.RoomChargeDistributionRequest;
 import team21.airbnb.dto.response.RoomChargeDistributionResponse;
 import team21.airbnb.repository.RoomRepository;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class RoomService {
 
-    public static final double DIGIT = 10.0;
+    public static final int DISTRIBUTION_UNIT = 10;
 
     private final RoomRepository roomRepository;
 
-    public RoomService(RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
-    }
+    public RoomChargeDistributionResponse getRoomChargeDistribution(
+            RoomChargeDistributionRequest roomChargeDistributionRequest) {
+        List<Room> rooms = roomRepository.findAvailableRoomsBetween(
+                roomChargeDistributionRequest.getCheckInDate(),
+                roomChargeDistributionRequest.getCheckOutDate());
 
-    public RoomChargeDistributionResponse getRoomChargeDistribution() {
-        List<Room> rooms = roomRepository.findAll();
         Map<Integer, Integer> graph = new HashMap<>();
         int maxRoomCharge = Integer.MIN_VALUE;
         int minRoomCharge = Integer.MAX_VALUE;
@@ -32,7 +35,7 @@ public class RoomService {
             maxRoomCharge = Math.max(maxRoomCharge, roomCharge);
             minRoomCharge = Math.min(minRoomCharge, roomCharge);
 
-            graph.merge((int) (Math.ceil(roomCharge / DIGIT) * DIGIT), 1, Integer::sum);
+            graph.merge(room.getDistributedRoomCharge(DISTRIBUTION_UNIT), 1, Integer::sum);
         }
 
         return new RoomChargeDistributionResponse(minRoomCharge, maxRoomCharge, graph);
