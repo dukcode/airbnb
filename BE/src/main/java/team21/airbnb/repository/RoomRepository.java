@@ -1,21 +1,32 @@
 package team21.airbnb.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import team21.airbnb.domain.Room;
 
 @Repository
 public class RoomRepository {
 
-    private final EntityManager em;
-
-    public RoomRepository(EntityManager em) {
-        this.em = em;
-    }
+    @PersistenceContext
+    private EntityManager em;
 
     public List<Room> findAll() {
         return em.createQuery("select r from Room r", Room.class)
+                .getResultList();
+    }
+
+    public List<Room> findAvailableRoomsBetween(LocalDate checkInDate, LocalDate checkOutDate) {
+        return em.createQuery(
+                        "select r from Room r where not exists"
+                                + " (select b from Booking b"
+                                + " where (b.room = r) and not ((b.checkOutDate < :checkInDate)"
+                                + " or (b.checkInDate > :checkOutDate)))",
+                        Room.class)
+                .setParameter("checkInDate", checkInDate)
+                .setParameter("checkOutDate", checkOutDate)
                 .getResultList();
     }
 
