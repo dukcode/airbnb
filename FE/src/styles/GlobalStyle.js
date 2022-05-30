@@ -1,6 +1,7 @@
+import * as React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
+const CreatedGlobalStyle = createGlobalStyle`
 * {
   margin: 0;
   padding: 0;
@@ -50,5 +51,9 @@ menu {
   list-style: none;
 }
 `;
+
+function GlobalStyle() {
+  return <CreatedGlobalStyle />;
+}
 
 export default GlobalStyle;

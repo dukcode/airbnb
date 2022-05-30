@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as Styled from 'components/header/searchBar/searchBar.style';
 import SearchBarItem from 'components/header/searchBar/searchBarItem';
 import SearchIcon from 'components/Icons/SearchIcon';
