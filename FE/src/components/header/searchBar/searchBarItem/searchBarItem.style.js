@@ -3,7 +3,8 @@ import styled from 'styled-components';
 const Item = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 16px 25px;
+  flex: 1;
+  cursor: pointer;
 `;
 
 const ItemTitle = styled.h4`
@@ -16,6 +17,9 @@ const ItemContents = styled.p`
   font-size: ${({ theme: { fontSize } }) => fontSize.medium};
   font-weight: ${({ theme: { fontWeight } }) => fontWeight.normal};
   color: ${({ theme: { colors } }) => colors.grey2};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export { Item, ItemTitle, ItemContents };
