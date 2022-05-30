@@ -8,5 +8,7 @@ declare module 'react-dom/client' {
 declare module 'react' {
   // typing module default export as `any` will allow you to access its members without compiler warning
   const StrictMode: any;
-  export { StrictMode };
+  const useReducer: any;
+  const MouseEventHandler: any;
+  export { StrictMode, useReducer, MouseEventHandler };
 }
