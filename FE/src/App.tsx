@@ -1,7 +1,9 @@
 import React from 'react';
 
+import Main from 'pages';
+
 function App() {
-  return <>test</>;
+  return <Main />;
 }
 
 export default App;
