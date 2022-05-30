@@ -6,7 +6,7 @@ type Contents = {
 };
 
 type Action = {
-  type: string;
+  type: ActionType;
   payload: Payload;
 };
 
@@ -19,7 +19,8 @@ enum ActionType {
   SET_CONTENTS,
 }
 
-const setContents = (state: Contents, { key, value }: Payload): Contents => {
+const setContents = (state: Contents, payload: Payload): Contents => {
+  const { key, value } = payload;
   return { ...state, [key]: value };
 };
 
