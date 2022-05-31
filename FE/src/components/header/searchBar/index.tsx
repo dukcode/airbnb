@@ -5,6 +5,7 @@ import Line from 'components/Icons/Line';
 import SearchBarItem from 'components/header/searchBar/searchBarItem';
 import SearchIcon from 'components/Icons/SearchIcon';
 import { ActionType, reducer } from 'components/header/searchBar/contentReducer';
+import priceData from 'components/mock/priceData';
 import PriceModal from './priceModal';
 import { customStyles } from './priceModal/PriceModalInfo.style';
 
@@ -18,8 +19,6 @@ function SearchBar() {
     setClickTitle(keyData);
     dispatch({
       type: ActionType.SET_CONTENTS,
-      // key -> initState key
-      // value -> '6월 5일'
       payload: { key: keyData, value: valueData },
     });
   };
@@ -34,14 +33,7 @@ function SearchBar() {
       <Styled.ItemWrapper>
         <SearchBarItem title="요금" contents={state.price} onClick={clickItem('price', '100,000 ~ 1,000,000')} />
       </Styled.ItemWrapper>
-      <PriceModal
-        style={customStyles}
-        isClick={clickTitle}
-        lowPrice={10000}
-        highPrice={500000}
-        averagePrice={2000}
-        yCoordinate={[2, 4]}
-      />
+      <PriceModal style={customStyles} isClick={clickTitle} priceData={priceData} />
       <Line />
       <Styled.ItemWrapper>
         <SearchBarItem title="인원" contents={state.guest} onClick={clickItem('guest', '게스트 3명, 유아 2명')} />
