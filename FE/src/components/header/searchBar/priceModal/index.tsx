@@ -32,14 +32,30 @@ function PriceModal({ style, isClick, priceData }: ModalProps) {
     let count = 0;
     let singlePrice = lowPrice + singleX;
 
-    priceData.forEach((price) => {
+    // eslint-disable-next-line consistent-return
+    function recursion(number, compareNum, plusNum) {
+      if (number >= compareNum) {
+        return number;
+      }
+      return recursion(number + plusNum, compareNum, plusNum);
+    }
+
+    priceData.forEach((price, idx) => {
       if (price <= singlePrice) {
         count += 1;
+        if (idx === priceData.length - 1) {
+          countArr.push(count);
+        }
       } else {
-        singlePrice += singleX;
         countArr.push(count);
         count = 0;
         count += 1;
+        const tempSingle = singlePrice;
+        singlePrice = recursion(singlePrice, price, singleX);
+        const zeroCount = (singlePrice - tempSingle) / singleX;
+        for (let i = 0; i < zeroCount - 1; i += 1) {
+          countArr.push(0);
+        }
       }
     });
 
@@ -53,7 +69,7 @@ function PriceModal({ style, isClick, priceData }: ModalProps) {
   }
 
   const coordinateData: Coordinate = {
-    xRange: 7,
+    xRange: 7.3,
     yCoordinate: makeYCoordinate(),
   };
 
