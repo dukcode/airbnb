@@ -10,5 +10,6 @@ declare module 'react' {
   const StrictMode: any;
   const useReducer: any;
   const MouseEventHandler: any;
-  export { StrictMode, useReducer, MouseEventHandler };
+  const useState: any;
+  export { StrictMode, useReducer, useState, MouseEventHandler };
 }
