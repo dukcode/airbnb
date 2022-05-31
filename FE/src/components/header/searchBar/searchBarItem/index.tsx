@@ -4,7 +4,7 @@ import * as Styled from 'components/header/searchBar/searchBarItem/searchBarItem
 type SearchBarItemProps = {
   title: string;
   contents: string;
-  onClick: React.MouseEventHandler<HTMLDivElement>;
+  onClick: any;
 };
 
 function SearchBarItem({ title, contents, onClick }: SearchBarItemProps) {
