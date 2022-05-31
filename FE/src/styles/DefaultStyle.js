@@ -2,6 +2,7 @@ const fontSize = {
   xxLarge: '34px',
   xLarge: '24px',
   large: '20px',
+  xMedium: '18px',
   medium: '16px',
   small: '14px',
   xSmall: '12px',
