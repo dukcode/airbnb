@@ -38,7 +38,7 @@ const Background = styled.div<BackgroundType>`
   width: 100%;
   height: 100%;
   border-radius: ${(props) => getBackgroundBorderRadius(props)};
-  background-color: ${({ isIncluded }) => (isIncluded ? '#828282' : 'transparent')};
+  background-color: ${({ isIncluded }) => (isIncluded ? '#EBEBEB' : 'transparent')};
 `;
 
 interface SelectAreaType {
