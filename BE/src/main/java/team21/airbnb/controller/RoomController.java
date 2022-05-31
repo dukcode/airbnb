@@ -14,7 +14,7 @@ public class RoomController {
 
     private final RoomService roomService;
 
-    @GetMapping("/rooms/prices")
+    @GetMapping("/rooms/charges")
     public List<Integer> getAvailableRoomCharges(@RequestParam LocalDate checkInDate,
             @RequestParam LocalDate checkoutDate) {
         return roomService.getAvailableRoomCharges(checkInDate, checkoutDate);
