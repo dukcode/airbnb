@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 
 import { moneyToWon } from 'utils/utils';
 import * as Styled from 'components/header/searchBar/priceModal/PriceModalInfo.style';
-import { PriceModalContext, Context } from 'components/context/PriceModalContext';
+import { Context } from 'components/context/PriceModalContext';
 
 interface ModalProps {
   priceData: number[];
