@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Modal from 'react-modal';
 
 import { moneyToWon } from 'utils/utils';
 import * as Styled from 'components/header/searchBar/priceModal/PriceModalInfo.style';
+import { PriceModalContext, Context } from 'components/context/PriceModalContext';
 
 interface ModalProps {
   priceData: number[];
   isClick: string;
-  style: any;
+  style: unknown;
 }
 
 interface Coordinate {
@@ -16,8 +17,11 @@ interface Coordinate {
 }
 
 function PriceModal({ style, isClick, priceData }: ModalProps) {
-  const lowPrice = priceData[0];
-  const highPrice = priceData[priceData.length - 1];
+  const PriceContext = useContext(Context);
+  const initialLowPrice = priceData[0];
+  const initialHighPrice = priceData[priceData.length - 1];
+  const lowPrice = initialLowPrice + (PriceContext.leftBtnValue * (initialHighPrice - initialLowPrice)) / 100;
+  const highPrice = initialLowPrice + (PriceContext.rightBtnValue * (initialHighPrice - initialLowPrice)) / 100;
   const averagePrice = moneyToWon(
     priceData.reduce((acc: number, el: number) => {
       return acc + el;
@@ -26,14 +30,14 @@ function PriceModal({ style, isClick, priceData }: ModalProps) {
   const isOpen: boolean = isClick === 'price';
 
   function makeYCoordinate() {
-    const singleX: number = (highPrice - lowPrice) / 50;
+    const singleX: number = (initialHighPrice - initialLowPrice) / 50;
     const yArr: number[] = [];
     const countArr: number[] = [];
     let count = 0;
-    let singlePrice = lowPrice + singleX;
+    let singlePrice = initialLowPrice + singleX;
 
     // eslint-disable-next-line consistent-return
-    function recursion(number, compareNum, plusNum) {
+    function recursion(number: number, compareNum: number, plusNum: number) {
       if (number >= compareNum) {
         return number;
       }
@@ -83,7 +87,7 @@ function PriceModal({ style, isClick, priceData }: ModalProps) {
           <Styled.Price>{moneyToWon(highPrice)}+</Styled.Price>
         </Styled.PriceWrapper>
         <Styled.Average>평균 1박 요금은 {averagePrice} 입니다. </Styled.Average>
-        <Styled.Graphs coordinate={coordinateData} />
+        <Styled.Graph coordinate={coordinateData} />
       </Styled.ModalInfo>
     </Modal>
   );

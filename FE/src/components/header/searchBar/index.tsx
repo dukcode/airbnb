@@ -6,6 +6,7 @@ import SearchBarItem from 'components/header/searchBar/searchBarItem';
 import SearchIcon from 'components/Icons/SearchIcon';
 import { ActionType, reducer } from 'components/header/searchBar/contentReducer';
 import priceData from 'components/mock/priceData';
+import { PriceModalContext } from 'components/context/PriceModalContext';
 import PriceModal from './priceModal';
 import { customStyles } from './priceModal/PriceModalInfo.style';
 
@@ -24,22 +25,24 @@ function SearchBar() {
   };
 
   return (
-    <Styled.SearchBarWrapper>
-      <Styled.ItemWrapper>
-        <SearchBarItem title="체크인" contents={state.checkIn} onClick={clickItem('checkIn', '6월 5일')} />
-        <SearchBarItem title="체크아웃" contents={state.checkOut} onClick={clickItem('checkOut', '6월 5일')} />
-      </Styled.ItemWrapper>
-      <Line />
-      <Styled.ItemWrapper>
-        <SearchBarItem title="요금" contents={state.price} onClick={clickItem('price', '100,000 ~ 1,000,000')} />
-      </Styled.ItemWrapper>
-      <PriceModal style={customStyles} isClick={clickTitle} priceData={priceData} />
-      <Line />
-      <Styled.ItemWrapper>
-        <SearchBarItem title="인원" contents={state.guest} onClick={clickItem('guest', '게스트 3명, 유아 2명')} />
-      </Styled.ItemWrapper>
-      <SearchIcon size={{ width: '40', height: '40' }} />
-    </Styled.SearchBarWrapper>
+    <PriceModalContext>
+      <Styled.SearchBarWrapper>
+        <Styled.ItemWrapper>
+          <SearchBarItem title="체크인" contents={state.checkIn} onClick={clickItem('checkIn', '6월 5일')} />
+          <SearchBarItem title="체크아웃" contents={state.checkOut} onClick={clickItem('checkOut', '6월 5일')} />
+        </Styled.ItemWrapper>
+        <Line />
+        <Styled.ItemWrapper>
+          <SearchBarItem title="요금" contents={state.price} onClick={clickItem('price', '100,000 ~ 1,000,000')} />
+        </Styled.ItemWrapper>
+        <PriceModal style={customStyles} isClick={clickTitle} priceData={priceData} />
+        <Line />
+        <Styled.ItemWrapper>
+          <SearchBarItem title="인원" contents={state.guest} onClick={clickItem('guest', '게스트 3명, 유아 2명')} />
+        </Styled.ItemWrapper>
+        <SearchIcon size={{ width: '40', height: '40' }} />
+      </Styled.SearchBarWrapper>
+    </PriceModalContext>
   );
 }
 
