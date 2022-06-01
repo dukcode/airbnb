@@ -59,23 +59,23 @@ class RoomRepositoryTest {
         bookingRepository.save(booking1);
 
         // when
-        List<Room> findEmptyList1 = roomRepository.findAvailableRoomsBetween(
+        List<Room> findEmptyList1 = roomRepository.findAvailableRoomsOrderByRoomChargeAcsBetween(
                 LocalDate.of(2022, 5, 3)
                 , LocalDate.of(2022, 5, 7));
 
-        List<Room> findEmptyList2 = roomRepository.findAvailableRoomsBetween(
+        List<Room> findEmptyList2 = roomRepository.findAvailableRoomsOrderByRoomChargeAcsBetween(
                 LocalDate.of(2022, 5, 8)
                 , LocalDate.of(2022, 5, 11));
 
-        List<Room> findEmptyList3 = roomRepository.findAvailableRoomsBetween(
+        List<Room> findEmptyList3 = roomRepository.findAvailableRoomsOrderByRoomChargeAcsBetween(
                 LocalDate.of(2022, 5, 1)
                 , LocalDate.of(2022, 5, 10));
 
-        List<Room> findNotEmptyList1 = roomRepository.findAvailableRoomsBetween(
+        List<Room> findNotEmptyList1 = roomRepository.findAvailableRoomsOrderByRoomChargeAcsBetween(
                 LocalDate.of(2022, 5, 1)
                 , LocalDate.of(2022, 5, 4));
 
-        List<Room> findNotEmptyList2 = roomRepository.findAvailableRoomsBetween(
+        List<Room> findNotEmptyList2 = roomRepository.findAvailableRoomsOrderByRoomChargeAcsBetween(
                 LocalDate.of(2022, 5, 11)
                 , LocalDate.of(2022, 5, 15));
 

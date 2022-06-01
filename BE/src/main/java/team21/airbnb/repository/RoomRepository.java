@@ -18,12 +18,14 @@ public class RoomRepository {
                 .getResultList();
     }
 
-    public List<Room> findAvailableRoomsBetween(LocalDate checkInDate, LocalDate checkOutDate) {
+    public List<Room> findAvailableRoomsOrderByRoomChargeAcsBetween(LocalDate checkInDate,
+            LocalDate checkOutDate) {
         return em.createQuery(
                         "select r from Room r where not exists"
                                 + " (select b from Booking b"
                                 + " where (b.room = r) and not ((b.checkOutDate < :checkInDate)"
-                                + " or (b.checkInDate > :checkOutDate)))",
+                                + " or (b.checkInDate > :checkOutDate)))"
+                                + " order by r.roomCharge asc",
                         Room.class)
                 .setParameter("checkInDate", checkInDate)
                 .setParameter("checkOutDate", checkOutDate)
