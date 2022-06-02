@@ -5,7 +5,7 @@ import Line from 'components/Icons/Line';
 import SearchBarItem from 'components/header/searchBar/searchBarItem';
 import SearchIcon from 'components/Icons/SearchIcon';
 import { ActionType, reducer } from 'components/header/searchBar/contentReducer';
-import priceData from 'components/mock/priceData';
+
 import { PriceModalContext } from 'components/context/PriceModalContext';
 import PriceModal from './priceModal';
 import { customStyles } from './priceModal/PriceModalInfo.style';
@@ -35,7 +35,7 @@ function SearchBar() {
         <Styled.ItemWrapper>
           <SearchBarItem title="요금" contents={state.price} onClick={clickItem('price', '100,000 ~ 1,000,000')} />
         </Styled.ItemWrapper>
-        <PriceModal style={customStyles} isClick={clickTitle} priceData={priceData} />
+        <PriceModal style={customStyles} isClick={clickTitle} />
         <Line />
         <Styled.ItemWrapper>
           <SearchBarItem title="인원" contents={state.guest} onClick={clickItem('guest', '게스트 3명, 유아 2명')} />
