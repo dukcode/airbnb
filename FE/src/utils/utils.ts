@@ -1,4 +1,4 @@
-export const moneyToWon = (money: number) => {
+function moneyToWon(money: number) {
   const newMoney = String(Math.floor(money));
   const moneyArr: string[] = Array.from(newMoney);
   const newArr: string[] = [];
@@ -13,4 +13,13 @@ export const moneyToWon = (money: number) => {
   }
 
   return `￦${newArr.join('')}`;
-};
+}
+
+function recursion(number: number, compareNum: number, plusNum: number) {
+  if (number >= compareNum) {
+    return number;
+  }
+  return recursion(number + plusNum, compareNum, plusNum);
+}
+
+export { moneyToWon, recursion };
