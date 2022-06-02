@@ -18,6 +18,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import team21.airbnb.domain.embeddable.ReviewStatus;
+import team21.airbnb.domain.embeddable.StayDate;
 
 @Entity
 @Getter
@@ -54,6 +56,8 @@ public class Room {
 
     private Integer numOfBedrooms;
 
+    private Integer numOfBeds;
+
     private Integer numOfBaths;
 
     private Integer cleaningFee;
@@ -62,8 +66,17 @@ public class Room {
 
     private Integer weeklyDiscountPercent;
 
+    @Embedded
+    private ReviewStatus reviewStatus;
+
     @OneToMany(mappedBy = "room")
     private List<RoomImage> roomImages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "room")
+    private List<RoomAmenity> roomAmenities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "room")
+    private List<Review> reviews = new ArrayList<>();
 
     @Embedded
     private Location location;
@@ -75,7 +88,7 @@ public class Room {
     @Builder
     public Room(Long id, RoomType roomType, SpaceType spaceType, String description,
             String name, String imageUrl, Integer maxNumOfGuests, Integer numOfBedrooms,
-            Integer numOfBaths, Integer cleaningFee, Integer roomCharge,
+            Integer numOfBeds, Integer numOfBaths, Integer cleaningFee, Integer roomCharge,
             Integer weeklyDiscountPercent, List<RoomImage> roomImages,
             Location location, User host) {
         this.id = id;
@@ -86,6 +99,7 @@ public class Room {
         this.imageUrl = imageUrl;
         this.maxNumOfGuests = maxNumOfGuests;
         this.numOfBedrooms = numOfBedrooms;
+        this.numOfBeds = numOfBeds;
         this.numOfBaths = numOfBaths;
         this.cleaningFee = cleaningFee;
         this.roomCharge = roomCharge;
@@ -95,4 +109,7 @@ public class Room {
         this.host = host;
     }
 
+    public Integer getAllAmount(StayDate stayDate) {
+        return roomCharge * stayDate.getDays() + cleaningFee;
+    }
 }

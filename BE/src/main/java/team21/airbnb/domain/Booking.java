@@ -1,7 +1,7 @@
 package team21.airbnb.domain;
 
-import java.time.LocalDate;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,6 +15,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import team21.airbnb.domain.embeddable.StayDate;
 
 @Entity
 @Getter
@@ -26,9 +27,8 @@ public class Booking {
     @Column(name = "booking_id")
     private Long id;
 
-    private LocalDate checkInDate;
-
-    private LocalDate checkOutDate;
+    @Embedded
+    private StayDate stayDate;
 
     private Integer numOfAdults;
 
@@ -48,11 +48,10 @@ public class Booking {
     private User user;
 
     @Builder
-    public Booking(LocalDate checkInDate, LocalDate checkOutDate, Integer numOfAdults,
-            Integer numOfChildren, Integer numOfInfants, BookingStatus status,
-            Room room, User user) {
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
+    public Booking(Long id, StayDate stayDate, Integer numOfAdults, Integer numOfChildren,
+            Integer numOfInfants, BookingStatus status, Room room, User user) {
+        this.id = id;
+        this.stayDate = stayDate;
         this.numOfAdults = numOfAdults;
         this.numOfChildren = numOfChildren;
         this.numOfInfants = numOfInfants;
