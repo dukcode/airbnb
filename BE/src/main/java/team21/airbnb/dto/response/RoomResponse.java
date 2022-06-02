@@ -4,8 +4,8 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import team21.airbnb.domain.RoomType;
-import team21.airbnb.domain.SpaceType;
+import team21.airbnb.domain.Room.RoomType;
+import team21.airbnb.domain.Room.SpaceType;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

@@ -24,6 +24,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room {
 
+    public enum RoomType {
+        APARTMENT, HOUSE, SECONDARY_UNIT, UNIQUE_SPACE, BED_AND_BREAKFAST, BOUTIQUE_HOTEL;
+    }
+
+    public enum SpaceType {
+        ENTIRE, PRIVATE, SHARED;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_id")
@@ -65,26 +73,26 @@ public class Room {
     private User host;
 
     @Builder
-    public Room(RoomType roomType, SpaceType spaceType, String description, String name,
-            Integer maxNumOfGuests, Integer numOfBedrooms, Integer numOfBaths,
-            Integer cleaningFee, Integer roomCharge, Integer weeklyDiscountPercent,
+    public Room(Long id, RoomType roomType, SpaceType spaceType, String description,
+            String name, String imageUrl, Integer maxNumOfGuests, Integer numOfBedrooms,
+            Integer numOfBaths, Integer cleaningFee, Integer roomCharge,
+            Integer weeklyDiscountPercent, List<RoomImage> roomImages,
             Location location, User host) {
+        this.id = id;
         this.roomType = roomType;
         this.spaceType = spaceType;
         this.description = description;
         this.name = name;
+        this.imageUrl = imageUrl;
         this.maxNumOfGuests = maxNumOfGuests;
         this.numOfBedrooms = numOfBedrooms;
         this.numOfBaths = numOfBaths;
         this.cleaningFee = cleaningFee;
         this.roomCharge = roomCharge;
         this.weeklyDiscountPercent = weeklyDiscountPercent;
+        this.roomImages = roomImages;
         this.location = location;
         this.host = host;
     }
 
-    public int getDistributedRoomCharge(int distributionUnit) {
-        // 올림
-        return ((roomCharge + (distributionUnit - 1)) / distributionUnit) * distributionUnit;
-    }
 }
