@@ -10,8 +10,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Embeddable
-public class ReviewStatus {
+public class RoomCondition {
 
-    private Double rate;
-    private Integer count;
+    private Integer maxNumOfGuests;
+
+    private Integer numOfBedrooms;
+
+    private Integer numOfBeds;
+
+    private Integer numOfBaths;
+
 }

@@ -1,5 +1,7 @@
 package team21.airbnb.domain.embeddable;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Access(AccessType.FIELD)
 @Embeddable
 public class GuestGroup {
 
@@ -18,4 +21,7 @@ public class GuestGroup {
 
     private Integer numOfInfants;
 
+    public Integer getNumOfGuests() {
+        return numOfAdults + numOfChildren;
+    }
 }

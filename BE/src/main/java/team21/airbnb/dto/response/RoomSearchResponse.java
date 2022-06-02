@@ -11,15 +11,18 @@ import team21.airbnb.domain.Room.RoomType;
 import team21.airbnb.domain.Room.SpaceType;
 import team21.airbnb.domain.RoomAmenity;
 import team21.airbnb.domain.embeddable.ReviewStatus;
+import team21.airbnb.domain.embeddable.RoomChargeInformation;
+import team21.airbnb.domain.embeddable.RoomCondition;
 import team21.airbnb.domain.embeddable.StayDate;
 
 @Getter @AllArgsConstructor public class RoomSearchResponse {
 
+    private Long id;
     private String imageUrl;
     private RoomType roomType;
+    private SpaceType spaceType;
     private String name;
     private Integer maxNumOfGuests;
-    private SpaceType spaceType;
     private Integer numOfBedrooms;
     private Integer numOfBeds;
     private Integer numOfBaths;
@@ -28,10 +31,14 @@ import team21.airbnb.domain.embeddable.StayDate;
     private Integer allAmount;
     private Double rate;
     private Integer numOfReviews;
+    private Double longitude;
+    private Double latitude;
 
     public static RoomSearchResponse from(Room room, StayDate stayDate) {
 
         ReviewStatus reviewStatus = room.getReviewStatus();
+        RoomCondition roomCondition = room.getRoomCondition();
+        RoomChargeInformation chargeInfo = room.getRoomChargeInfo();
 
         List<String> amenities = room.getRoomAmenities().stream()
                 .map(RoomAmenity::getAmenity)
@@ -40,18 +47,23 @@ import team21.airbnb.domain.embeddable.StayDate;
                 .map(Amenity::getName)
                 .collect(Collectors.toList());
 
-        return new RoomSearchResponse(room.getImageUrl(),
+        return new RoomSearchResponse(
+                room.getId(),
+                room.getImageUrl(),
                 room.getRoomType(),
-                room.getName(),
-                room.getMaxNumOfGuests(),
                 room.getSpaceType(),
-                room.getNumOfBedrooms(),
-                room.getNumOfBeds(),
-                room.getNumOfBaths(),
+                room.getName(),
+                roomCondition.getMaxNumOfGuests(),
+                roomCondition.getNumOfBedrooms(),
+                roomCondition.getNumOfBeds(),
+                roomCondition.getNumOfBaths(),
                 amenities,
-                room.getRoomCharge(),
-                room.getAllAmount(stayDate),
+                chargeInfo.getRoomCharge(),
+                chargeInfo.getAllRoomCharge(stayDate),
                 reviewStatus.getRate(),
-                reviewStatus.getCount());
+                reviewStatus.getCount(),
+                room.getLocation().getLongitude(),
+                room.getLocation().getLatitude()
+        );
     }
 }

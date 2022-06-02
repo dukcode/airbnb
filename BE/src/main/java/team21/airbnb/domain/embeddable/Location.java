@@ -10,8 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Embeddable
-public class ReviewStatus {
+public class Location {
 
-    private Double rate;
-    private Integer count;
+    private Double latitude;
+
+    private Double longitude;
+
+    
 }

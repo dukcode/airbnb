@@ -23,17 +23,23 @@ import team21.airbnb.domain.embeddable.StayDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Booking {
 
+    public enum BookingStatus {
+        BOOKED, CANCELED;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "booking_id")
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status;
+
     @Embedded
     private StayDate stayDate;
 
-
-    @Enumerated(EnumType.STRING)
-    private BookingStatus status;
+    @Embedded
+    private GuestGroup guestGroup;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
@@ -43,17 +49,13 @@ public class Booking {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Embedded
-    private GuestGroup guestGroup;
-
     @Builder
-    public Booking(Long id, StayDate stayDate, BookingStatus status, Room room,
-            User user, GuestGroup guestGroup) {
-        this.id = id;
-        this.stayDate = stayDate;
+    public Booking(BookingStatus status, StayDate stayDate,
+            GuestGroup guestGroup, Room room, User user) {
         this.status = status;
+        this.stayDate = stayDate;
+        this.guestGroup = guestGroup;
         this.room = room;
         this.user = user;
-        this.guestGroup = guestGroup;
     }
 }
