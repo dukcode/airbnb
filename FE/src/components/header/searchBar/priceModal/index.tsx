@@ -4,6 +4,8 @@ import Modal from 'react-modal';
 import { moneyToWon } from 'utils/utils';
 import * as Styled from 'components/header/searchBar/priceModal/PriceModalInfo.style';
 import { Context } from 'components/context/PriceModalContext';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 interface ModalProps {
   priceData: number[];
@@ -18,6 +20,8 @@ interface Coordinate {
 
 function PriceModal({ style, isClick, priceData }: ModalProps) {
   const PriceContext = useContext(Context);
+  const [title, setTitle] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const initialLowPrice = priceData[0];
   const initialHighPrice = priceData[priceData.length - 1];
   const lowPrice = initialLowPrice + (PriceContext.leftBtnValue * (initialHighPrice - initialLowPrice)) / 100;
@@ -27,7 +31,9 @@ function PriceModal({ style, isClick, priceData }: ModalProps) {
       return acc + el;
     }, 0) / priceData.length,
   );
-  const isOpen: boolean = isClick === 'price';
+  useEffect(() => {
+    setIsOpen(isClick === 'price');
+  }, [isClick || isOpen]);
 
   function makeYCoordinate() {
     const singleX: number = (initialHighPrice - initialLowPrice) / 50;
@@ -77,8 +83,11 @@ function PriceModal({ style, isClick, priceData }: ModalProps) {
     yCoordinate: makeYCoordinate(),
   };
 
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   return (
-    <Modal isOpen={isOpen} style={style}>
+    <Modal isOpen={isOpen} style={style} onRequestClose={closeModal}>
       <Styled.ModalInfo>
         <Styled.Title>가격 범위</Styled.Title>
         <Styled.PriceWrapper>
