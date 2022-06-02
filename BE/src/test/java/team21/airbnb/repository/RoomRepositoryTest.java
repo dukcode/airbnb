@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import team21.airbnb.domain.Booking;
 import team21.airbnb.domain.Room;
+import team21.airbnb.domain.embeddable.RoomChargeInformation;
+import team21.airbnb.domain.embeddable.StayDate;
 
 @SpringBootTest
 @Transactional
@@ -30,7 +32,7 @@ class RoomRepositoryTest {
         int roomCharge = 200000;
         roomRepository.save(Room.builder()
                 .name(name)
-                .roomCharge(roomCharge)
+                .roomChargeInfo(new RoomChargeInformation(200000, 0, 0))
                 .build());
 
         // when
@@ -39,7 +41,7 @@ class RoomRepositoryTest {
         // then
         Room findRoom = rooms.get(0);
         assertThat(findRoom.getName()).isEqualTo(name);
-        assertThat(findRoom.getRoomCharge()).isEqualTo(roomCharge);
+        assertThat(findRoom.getRoomChargeInfo().getRoomCharge()).isEqualTo(roomCharge);
     }
 
     @Test
@@ -47,12 +49,12 @@ class RoomRepositoryTest {
     public void findAvailableRoomBetweenCheckInAndCheckOut() throws Exception {
         // given
         Room room1 = Room.builder().name("room1")
-                .roomCharge(200000)
+                .roomChargeInfo(new RoomChargeInformation(200000, 0, 0))
                 .build();
         roomRepository.save(room1);
 
-        Booking booking1 = Booking.builder().checkInDate(LocalDate.of(2022, 5, 5))
-                .checkOutDate(LocalDate.of(2022, 5, 10))
+        Booking booking1 = Booking.builder()
+                .stayDate(new StayDate(LocalDate.of(2022, 5, 5), LocalDate.of(2022, 5, 10)))
                 .room(room1)
                 .build();
 
@@ -85,5 +87,26 @@ class RoomRepositoryTest {
         assertThat(findEmptyList3.isEmpty()).isTrue();
         assertThat(findNotEmptyList1.isEmpty()).isFalse();
         assertThat(findNotEmptyList2.isEmpty()).isFalse();
+    }
+
+    @Test
+    @DisplayName("방을 검색한다")
+    public void searchRoom() throws Exception {
+        // given
+        Room room1 = Room.builder().name("room1")
+                .roomChargeInfo(new RoomChargeInformation(200000, 0, 0))
+                .build();
+        roomRepository.save(room1);
+
+        Booking booking1 = Booking.builder()
+                .stayDate(new StayDate(LocalDate.of(2022, 5, 5), LocalDate.of(2022, 5, 10)))
+                .room(room1)
+                .build();
+
+        bookingRepository.save(booking1);
+
+        // when
+
+        // then
     }
 }

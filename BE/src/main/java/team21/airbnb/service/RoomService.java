@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team21.airbnb.domain.Room;
+import team21.airbnb.dto.request.RoomSearchCondition;
+import team21.airbnb.dto.response.RoomSearchResponse;
 import team21.airbnb.repository.RoomRepository;
 
 @Service
@@ -20,7 +22,8 @@ public class RoomService {
         List<Room> rooms = roomRepository.findAvailableRoomsOrderByRoomChargeAcsBetween(
                 checkInDate, checkOutDate);
 
-        return rooms.stream().map(Room::getRoomCharge).collect(Collectors.toList());
+        return rooms.stream().map(r -> r.getRoomChargeInfo().getRoomCharge())
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -29,4 +32,9 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
+    public List<RoomSearchResponse> searchRooms(RoomSearchCondition condition) {
+        List<Room> rooms = roomRepository.searchWithCondition(condition);
+        return rooms.stream().map(r -> RoomSearchResponse.from(r, condition.getStayDate()))
+                .collect(Collectors.toList());
+    }
 }

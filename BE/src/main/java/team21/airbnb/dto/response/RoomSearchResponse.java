@@ -11,15 +11,16 @@ import team21.airbnb.domain.Room.RoomType;
 import team21.airbnb.domain.Room.SpaceType;
 import team21.airbnb.domain.RoomAmenity;
 import team21.airbnb.domain.embeddable.ReviewStatus;
+import team21.airbnb.domain.embeddable.RoomCondition;
 import team21.airbnb.domain.embeddable.StayDate;
 
 @Getter @AllArgsConstructor public class RoomSearchResponse {
 
     private String imageUrl;
     private RoomType roomType;
+    private SpaceType spaceType;
     private String name;
     private Integer maxNumOfGuests;
-    private SpaceType spaceType;
     private Integer numOfBedrooms;
     private Integer numOfBeds;
     private Integer numOfBaths;
@@ -32,6 +33,7 @@ import team21.airbnb.domain.embeddable.StayDate;
     public static RoomSearchResponse from(Room room, StayDate stayDate) {
 
         ReviewStatus reviewStatus = room.getReviewStatus();
+        RoomCondition roomCondition = room.getRoomCondition();
 
         List<String> amenities = room.getRoomAmenities().stream()
                 .map(RoomAmenity::getAmenity)
@@ -42,14 +44,14 @@ import team21.airbnb.domain.embeddable.StayDate;
 
         return new RoomSearchResponse(room.getImageUrl(),
                 room.getRoomType(),
-                room.getName(),
-                room.getMaxNumOfGuests(),
                 room.getSpaceType(),
-                room.getNumOfBedrooms(),
-                room.getNumOfBeds(),
-                room.getNumOfBaths(),
+                room.getName(),
+                roomCondition.getMaxNumOfGuests(),
+                roomCondition.getNumOfBedrooms(),
+                roomCondition.getNumOfBeds(),
+                roomCondition.getNumOfBaths(),
                 amenities,
-                room.getRoomCharge(),
+                room.getRoomChargeInfo().getRoomCharge(),
                 room.getAllAmount(stayDate),
                 reviewStatus.getRate(),
                 reviewStatus.getCount());

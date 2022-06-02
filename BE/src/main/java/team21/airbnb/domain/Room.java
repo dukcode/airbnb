@@ -18,7 +18,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import team21.airbnb.domain.embeddable.Location;
 import team21.airbnb.domain.embeddable.ReviewStatus;
+import team21.airbnb.domain.embeddable.RoomChargeInformation;
+import team21.airbnb.domain.embeddable.RoomCondition;
 import team21.airbnb.domain.embeddable.StayDate;
 
 @Entity
@@ -45,29 +48,28 @@ public class Room {
     @Enumerated(EnumType.STRING)
     private SpaceType spaceType;
 
+    private String name;
+
     @Column(length = 800)
     private String description;
 
-    private String name;
-
     private String imageUrl;
 
-    private Integer maxNumOfGuests;
+    @Embedded
+    private RoomCondition roomCondition;
 
-    private Integer numOfBedrooms;
-
-    private Integer numOfBeds;
-
-    private Integer numOfBaths;
-
-    private Integer cleaningFee;
-
-    private Integer roomCharge;
-
-    private Integer weeklyDiscountPercent;
+    @Embedded
+    private RoomChargeInformation roomChargeInfo;
 
     @Embedded
     private ReviewStatus reviewStatus;
+
+    @Embedded
+    private Location location;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "host_id")
+    private User host;
 
     @OneToMany(mappedBy = "room")
     private List<RoomImage> roomImages = new ArrayList<>();
@@ -78,38 +80,24 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<Review> reviews = new ArrayList<>();
 
-    @Embedded
-    private Location location;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "host_id")
-    private User host;
-
     @Builder
-    public Room(Long id, RoomType roomType, SpaceType spaceType, String description,
-            String name, String imageUrl, Integer maxNumOfGuests, Integer numOfBedrooms,
-            Integer numOfBeds, Integer numOfBaths, Integer cleaningFee, Integer roomCharge,
-            Integer weeklyDiscountPercent, List<RoomImage> roomImages,
-            Location location, User host) {
-        this.id = id;
+    public Room(RoomType roomType, SpaceType spaceType, String name, String description,
+            String imageUrl, RoomCondition roomCondition,
+            RoomChargeInformation roomChargeInfo,
+            ReviewStatus reviewStatus, Location location) {
         this.roomType = roomType;
         this.spaceType = spaceType;
-        this.description = description;
         this.name = name;
+        this.description = description;
         this.imageUrl = imageUrl;
-        this.maxNumOfGuests = maxNumOfGuests;
-        this.numOfBedrooms = numOfBedrooms;
-        this.numOfBeds = numOfBeds;
-        this.numOfBaths = numOfBaths;
-        this.cleaningFee = cleaningFee;
-        this.roomCharge = roomCharge;
-        this.weeklyDiscountPercent = weeklyDiscountPercent;
-        this.roomImages = roomImages;
+        this.roomCondition = roomCondition;
+        this.roomChargeInfo = roomChargeInfo;
+        this.reviewStatus = reviewStatus;
         this.location = location;
-        this.host = host;
     }
 
     public Integer getAllAmount(StayDate stayDate) {
-        return roomCharge * stayDate.getDays() + cleaningFee;
+        return roomChargeInfo.getRoomCharge() * stayDate.getDays()
+                + roomChargeInfo.getCleaningFee();
     }
 }

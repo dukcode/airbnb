@@ -1,24 +1,20 @@
 package team21.airbnb.domain.embeddable;
 
-import java.time.LocalDate;
-import java.time.Period;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Getter
 @Embeddable
-public class StayDate {
+public class Location {
 
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
+    private Double latitude;
 
-    public Integer getDays() {
-        return Period.between(checkInDate, checkOutDate).getDays();
-    }
+    private Double longitude;
 
+    
 }
