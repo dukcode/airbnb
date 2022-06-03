@@ -16,4 +16,10 @@ WeekListEng.args = {
 };
 WeekListEng.storyName = 'WeekList(Eng)';
 
+export const WeekListJp = Template.bind({});
+WeekListJp.args = {
+  data: weekData.jp,
+};
+WeekListJp.storyName = 'WeekList(Jp)';
+
 export const Default: ComponentStory<typeof WeekList> = (args) => <WeekList {...args} />;
