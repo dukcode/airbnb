@@ -29,6 +29,11 @@ const getTextStyle = (isChecked = false, isDisabled = false) => {
   };
 };
 
+const hoverStyles = {
+  background: '#333',
+  color: '#fff',
+};
+
 const Day = ({
   isChecked = false,
   isIncluded = false,
@@ -39,7 +44,7 @@ const Day = ({
   return (
     <Styled.TempWrapper>
       <Styled.Background isChecked={isChecked} isIncluded={isIncluded} isStart={isStart} week={week}>
-        <Styled.SelectArea isChecked={isChecked}>
+        <Styled.SelectArea isChecked={isChecked} hoverStyles={hoverStyles}>
           <Text {...getTextStyle(isChecked, isDisabled)}>{day}</Text>
         </Styled.SelectArea>
       </Styled.Background>
