@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Week } from 'components/calender/constants/weekData';
+import { Week } from 'components/calender/constants/dateData';
 
 const getBackgroundBorderRadius = ({ isChecked, isStart, week }: BackgroundType) => {
   const WeekTypeKeys = Object.keys(Week);

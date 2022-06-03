@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Styled from 'components/calender/components/WeekList/weekList.style';
-import weekData from 'components/calender/constants/weekData';
+import { Language, weekData } from 'components/calender/constants/dateData';
 import Text, { TextProps } from 'components/calender/components//Text';
 
 export interface WeekListProps {
@@ -34,7 +34,7 @@ WeekList.defaultProps = {
   width: '336px',
   height: '24px',
   background: '#fff',
-  data: weekData.kor,
+  data: weekData[Language.KOR],
 };
 
 export default WeekList;

@@ -4,6 +4,7 @@ import WeekList from 'components/calender/components/WeekList';
 import Title from 'components/calender/components/Title';
 import Month from 'components/calender/components/Month';
 import { getCurrentMonthInfo, getTodayDateInfo, getMovedMonthInfo } from 'components/calender/utils/dataUtils';
+import { dateUnit, Language } from 'components/calender/constants/dateData';
 
 interface CalenderProps {
   year: number;
@@ -13,8 +14,10 @@ interface CalenderProps {
 }
 
 const Calender = ({ year, month, week, day }: CalenderProps) => {
-  const CalenderTitle = `${year}년 ${month}월`;
+  const { year: yearUnit, month: monthUnit } = dateUnit[Language.KOR];
+  const CalenderTitle = `${year}${yearUnit} ${month}${monthUnit}`;
   const { lastDay, startDayOfWeek } = getCurrentMonthInfo(year, month);
+
   const getPrevMonthInfo = getMovedMonthInfo(year, month, 1);
   const getNextMonthInfo = getMovedMonthInfo(year, month, -1);
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Styled from 'components/calender/components/Day/day.style';
-import { Week } from 'components/calender/constants/weekData';
+import { Week } from 'components/calender/constants/dateData';
 import Text from 'components/calender/components/Text';
 
 interface DayProps {
