@@ -32,10 +32,10 @@ const getCurrentMonthInfo = (year: number, month: number): MonthInfo => {
   };
 };
 
-const prevMonthInfo = (year: number, month: number) => {
+const getMovedMonthInfo = (year: number, month: number, movedCount: number) => {
   let currentMonth = month;
   return (): MonthInfo => {
-    currentMonth -= 1;
+    currentMonth += movedCount;
     return {
       lastDay: getLastDay(year, currentMonth),
       startDayOfWeek: getStartDayOfWeek(year, currentMonth),
@@ -43,15 +43,4 @@ const prevMonthInfo = (year: number, month: number) => {
   };
 };
 
-const nextMonthInfo = (year: number, month: number) => {
-  let currentMonth = month;
-  return (): MonthInfo => {
-    currentMonth += 1;
-    return {
-      lastDay: getLastDay(year, currentMonth),
-      startDayOfWeek: getStartDayOfWeek(year, currentMonth),
-    };
-  };
-};
-
-export { getTodayDateInfo, getCurrentMonthInfo, prevMonthInfo, nextMonthInfo };
+export { getTodayDateInfo, getCurrentMonthInfo, getMovedMonthInfo };
