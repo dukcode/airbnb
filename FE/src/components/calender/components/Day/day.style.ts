@@ -1,6 +1,5 @@
-import * as React from 'react';
 import styled from 'styled-components';
-import { Week } from 'components/calender/constants/weekData';
+import { Week } from 'components/calender/constants/dateData';
 
 const getBackgroundBorderRadius = ({ isChecked, isStart, week }: BackgroundType) => {
   const WeekTypeKeys = Object.keys(Week);
@@ -22,6 +21,7 @@ const getBackgroundBorderRadius = ({ isChecked, isStart, week }: BackgroundType)
 const TempWrapper = styled.div`
   width: 48px;
   height: 48px;
+  cursor: pointer;
 `;
 
 interface BackgroundType {
@@ -43,6 +43,9 @@ const Background = styled.div<BackgroundType>`
 
 interface SelectAreaType {
   isChecked: boolean;
+  hoverStyles?: {
+    [key: string]: string;
+  };
 }
 
 const SelectArea = styled.div<SelectAreaType>`
@@ -53,6 +56,12 @@ const SelectArea = styled.div<SelectAreaType>`
   height: 100%;
   background-color: ${({ isChecked }) => (isChecked ? '#333' : 'transparent')};
   border-radius: 50%;
+  &:hover {
+    background-color: ${({ hoverStyles }) => hoverStyles?.background || '#333'};
+  }
+  &:hover > p {
+    color: ${({ hoverStyles }) => hoverStyles?.color || '#fff'};
+  }
 `;
 
 export { TempWrapper, Background, SelectArea };

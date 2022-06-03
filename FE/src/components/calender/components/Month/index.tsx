@@ -25,13 +25,17 @@ const getDayInfo = (index: number, year: number, month: number, startDayOfWeek: 
   };
 };
 
+const getKey = (length: number, index: number) => {
+  return length - (length - index);
+};
+
 function Month({ year, month, lastDay, startDayOfWeek }: MonthProps) {
   return (
     <Styled.MonthContainer rowCount={calcGridRowCount(lastDay, startDayOfWeek)}>
       {startDayOfWeek > 0 && <Styled.MonthItem startDayOfWeek={startDayOfWeek} />}
       {[...new Array(lastDay)].map((_, index) => (
         <Styled.MonthItem>
-          <Day info={getDayInfo(index, year, month, startDayOfWeek)} />
+          <Day key={getKey(startDayOfWeek, index)} info={getDayInfo(index, year, month, startDayOfWeek)} />
         </Styled.MonthItem>
       ))}
     </Styled.MonthContainer>

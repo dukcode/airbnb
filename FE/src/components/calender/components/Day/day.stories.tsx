@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Week } from 'components/calender/constants/weekData';
+import { Week } from 'components/calender/constants/dateData';
 import Day from 'components/calender/components/Day';
 
 export default {

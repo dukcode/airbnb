@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import WeekList from 'components/calender/components/WeekList';
-import weekData from 'components/calender/constants/weekData';
+import { weekData } from 'components/calender/constants/dateData';
 
 export default {
   title: 'Calender/WeekList',
