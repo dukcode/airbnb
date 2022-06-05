@@ -22,8 +22,6 @@ import team21.airbnb.domain.embeddable.ReviewStatus;
 import team21.airbnb.domain.embeddable.RoomChargeInformation;
 import team21.airbnb.domain.embeddable.RoomCondition;
 import team21.airbnb.domain.embeddable.StayDate;
-import team21.airbnb.dto.request.RoomSearchCondition;
-import team21.airbnb.dto.request.RoomSearchCondition.ChargeRange;
 import team21.airbnb.dto.response.RoomDetailResponse;
 import team21.airbnb.dto.response.RoomSearchResponse;
 import team21.airbnb.repository.BookingRepository;

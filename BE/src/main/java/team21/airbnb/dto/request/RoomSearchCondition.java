@@ -1,28 +1,43 @@
 package team21.airbnb.dto.request;
 
-import lombok.AllArgsConstructor;
+import java.time.LocalDate;
+import lombok.AccessLevel;
 import lombok.Getter;
-import team21.airbnb.domain.embeddable.GuestGroup;
-import team21.airbnb.domain.embeddable.Location;
-import team21.airbnb.domain.embeddable.StayDate;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-@Getter
-@AllArgsConstructor
+@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString
 public class RoomSearchCondition {
 
-    private StayDate stayDate;
-    private ChargeRange chargeRange;
+    private Double westLongitude;
 
-    private GuestGroup guestGroup;
+    private Double northLatitude;
 
-    private Location northWestLocation;
-    private Location southEastLocation;
+    private Double eastLongitude;
 
-    @Getter
-    @AllArgsConstructor
-    public static class ChargeRange {
+    private Double southLatitude;
 
-        private Integer min;
-        private Integer max;
-    }
+    @DateTimeFormat(iso = ISO.DATE)
+    private LocalDate checkInDate;
+
+    @DateTimeFormat(iso = ISO.DATE)
+    private LocalDate checkOutDate;
+
+    private Integer minRoomCharge;
+
+    private Integer maxRoomCharge;
+
+    private Integer numOfGuests;
+
+    private Integer numOfAdults;
+
+    private Integer numOfChildren;
+
+    private Integer numOfInfants;
+
 }

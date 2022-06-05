@@ -50,15 +50,15 @@ public class RoomRepository {
                                 + " and (r.location.longitude between :minLongitude and :maxLongitude)"
                                 + " and (r.location.latitude between :minLatitude and :maxLatitude)",
                         Room.class)
-                .setParameter("checkInDate", condition.getStayDate().getCheckInDate())
-                .setParameter("checkOutDate", condition.getStayDate().getCheckOutDate())
-                .setParameter("numOfGuests", condition.getGuestGroup().getNumOfGuests())
-                .setParameter("minRoomCharge", condition.getChargeRange().getMin())
-                .setParameter("maxRoomCharge", condition.getChargeRange().getMax())
-                .setParameter("minLongitude", condition.getNorthWestLocation().getLongitude())
-                .setParameter("maxLongitude", condition.getSouthEastLocation().getLongitude())
-                .setParameter("minLatitude", condition.getSouthEastLocation().getLatitude())
-                .setParameter("maxLatitude", condition.getNorthWestLocation().getLatitude())
+                .setParameter("checkInDate", condition.getCheckInDate())
+                .setParameter("checkOutDate", condition.getCheckOutDate())
+                .setParameter("numOfGuests", condition.getNumOfGuests())
+                .setParameter("minRoomCharge", condition.getMinRoomCharge())
+                .setParameter("maxRoomCharge", condition.getMaxRoomCharge())
+                .setParameter("minLongitude", condition.getWestLongitude())
+                .setParameter("maxLongitude", condition.getWestLongitude())
+                .setParameter("minLatitude", condition.getSouthLatitude())
+                .setParameter("maxLatitude", condition.getNorthLatitude())
                 .getResultList();
     }
 
