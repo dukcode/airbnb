@@ -22,6 +22,7 @@ import team21.airbnb.domain.embeddable.ReviewStatus;
 import team21.airbnb.domain.embeddable.RoomChargeInformation;
 import team21.airbnb.domain.embeddable.RoomCondition;
 import team21.airbnb.domain.embeddable.StayDate;
+import team21.airbnb.dto.request.RoomSearchCondition;
 import team21.airbnb.dto.response.RoomDetailResponse;
 import team21.airbnb.dto.response.RoomSearchResponse;
 import team21.airbnb.repository.BookingRepository;
@@ -72,11 +73,17 @@ class RoomServiceTest {
     public void searchRoom() throws Exception {
         // given
         RoomSearchCondition condition = new RoomSearchCondition(
-                new StayDate(LocalDate.of(2022, 6, 10), LocalDate.of(2022, 6, 13)),
-                new ChargeRange(0, 1000000),
-                new GuestGroup(1, 1, 1)
-                , new Location(140.0, 30.0)
-                , new Location(130.0, 40.0));
+                130.0,
+                40.0,
+                140.0,
+                30.0,
+                LocalDate.of(2022, 6, 10),
+                LocalDate.of(2022, 6, 13),
+                0,
+                1000000,
+                3,
+                1, 1, 1
+        );
 
         // when
         List<RoomSearchResponse> roomSearchResponses = roomService.searchRooms(condition);

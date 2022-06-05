@@ -15,7 +15,9 @@ import team21.airbnb.domain.embeddable.RoomChargeInformation;
 import team21.airbnb.domain.embeddable.RoomCondition;
 import team21.airbnb.domain.embeddable.StayDate;
 
-@Getter @AllArgsConstructor public class RoomSearchResponse {
+@Getter
+@AllArgsConstructor
+public class RoomSearchResponse {
 
     private Long id;
     private String imageUrl;

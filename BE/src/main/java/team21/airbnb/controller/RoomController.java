@@ -16,8 +16,8 @@ import team21.airbnb.dto.response.RoomDetailResponse;
 import team21.airbnb.dto.response.RoomSearchResponse;
 import team21.airbnb.service.RoomService;
 
-@RestController
 @RequiredArgsConstructor
+@RestController
 public class RoomController {
 
     private final RoomService roomService;

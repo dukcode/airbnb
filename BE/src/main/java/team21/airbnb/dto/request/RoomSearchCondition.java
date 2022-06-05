@@ -2,16 +2,16 @@ package team21.airbnb.dto.request;
 
 import java.time.LocalDate;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString
+@AllArgsConstructor
 public class RoomSearchCondition {
 
     private Double westLongitude;
