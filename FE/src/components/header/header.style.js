@@ -10,4 +10,11 @@ const HeaderWrapper = styled.div`
   background-image: url(${HeroImgSrc});
 `;
 
-export { HeaderWrapper };
+const Header = styled.div`
+  display: flex;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+`;
+
+export { Header, HeaderWrapper };

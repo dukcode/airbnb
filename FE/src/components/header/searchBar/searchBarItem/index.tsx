@@ -4,11 +4,12 @@ import * as Styled from 'components/header/searchBar/searchBarItem/searchBarItem
 type SearchBarItemProps = {
   title: string;
   contents: string;
+  onClick: any;
 };
 
-function SearchBarItem({ title, contents }: SearchBarItemProps) {
+function SearchBarItem({ title, contents, onClick }: SearchBarItemProps) {
   return (
-    <Styled.Item>
+    <Styled.Item onClick={onClick}>
       <Styled.ItemTitle>{title}</Styled.ItemTitle>
       <Styled.ItemContents>{contents}</Styled.ItemContents>
     </Styled.Item>

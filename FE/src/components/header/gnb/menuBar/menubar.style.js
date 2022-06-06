@@ -12,6 +12,13 @@ const MenuItem = styled.li`
   font-weight: ${({ theme: { fontWeight } }) => fontWeight.medium};
   color: ${({ theme: { colors } }) => colors.grey1};
   line-height: 23px;
+  cursor: pointer;
+  :hover {
+    font-weight: ${({ theme: { fontWeight } }) => fontWeight.bold};
+    color: ${({ theme: { colors } }) => colors.black};
+    text-decoration: underline;
+    text-underline-position: under;
+  }
 `;
 
 export { MenuList, MenuItem };

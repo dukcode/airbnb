@@ -7,6 +7,7 @@ module.exports = {
     'plugin:import/warnings',
     'plugin:prettier/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:storybook/recommended',
   ],
   rules: {
     'linebreak-style': 0,
@@ -20,5 +21,7 @@ module.exports = {
     'react/prop-types': 0,
     'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'jsx-a11y/no-noninteractive-element-interactions': 0,
+    'react/function-component-definition': 0,
+    'react/jsx-props-no-spreading': 0,
   },
 };
