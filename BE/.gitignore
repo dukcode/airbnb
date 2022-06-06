@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Secutiry ###
+src/main/resources/application-mysql-db.yml

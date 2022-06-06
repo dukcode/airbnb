@@ -37,6 +37,8 @@ class RoomServiceTest {
     @Autowired RoomRepository roomRepository;
     @Autowired BookingRepository bookingRepository;
 
+    private Long saveRoomId;
+
     @BeforeEach
     public void setUp() {
 
@@ -64,7 +66,7 @@ class RoomServiceTest {
                 room,
                 null);
 
-        roomRepository.save(room);
+        saveRoomId = roomRepository.save(room);
         bookingRepository.save(booking);
     }
 
@@ -73,10 +75,10 @@ class RoomServiceTest {
     public void searchRoom() throws Exception {
         // given
         RoomSearchCondition condition = new RoomSearchCondition(
-                130.0,
-                40.0,
-                140.0,
                 30.0,
+                140.0,
+                40.0,
+                130.0,
                 LocalDate.of(2022, 6, 10),
                 LocalDate.of(2022, 6, 13),
                 0,
@@ -98,7 +100,7 @@ class RoomServiceTest {
     @Test
     @DisplayName("room detail을 검색한다")
     public void searchRoomDetail() {
-        RoomDetailResponse roomDetail = roomService.getRoomDetail(1L,
+        RoomDetailResponse roomDetail = roomService.getRoomDetail(saveRoomId,
                 new StayDate(LocalDate.of(2022, 6, 10), LocalDate.of(2022, 6, 13)),
                 new GuestGroup(1, 1, 1));
         System.out.println(roomDetail);
