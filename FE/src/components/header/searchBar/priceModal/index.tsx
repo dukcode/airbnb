@@ -1,17 +1,18 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Modal from 'react-modal';
 
 import { moneyToWon } from 'utils/utils';
 import * as Styled from 'components/header/searchBar/priceModal/PriceModalInfo.style';
 
+import { Context } from 'components/context/ModalContext';
 import { ModalProps } from 'model/priceModal.model';
 import usePriceModalProvider from './usePriceModalProvider';
 
-function PriceModal({ style, isClick }: ModalProps) {
-  const [coordinateData, isOpen, lowPrice, highPrice, averagePrice, onCloseModal] = usePriceModalProvider(isClick);
-
+function PriceModal({ style }: ModalProps) {
+  const [coordinateData, lowPrice, highPrice, averagePrice, onCloseModal] = usePriceModalProvider();
+  const { isPriceOpen } = useContext(Context);
   return (
-    <Modal isOpen={isOpen} style={style} onRequestClose={onCloseModal}>
+    <Modal isOpen={isPriceOpen} style={style} onRequestClose={onCloseModal}>
       <Styled.ModalInfo>
         <Styled.Title>가격 범위</Styled.Title>
         <Styled.PriceWrapper>

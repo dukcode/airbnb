@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import priceData from 'components/mock/priceData';
-import { Context } from 'components/context/PriceModalContext';
+import { Context } from 'components/context/ModalContext';
 import { moneyToWon, recursion } from 'utils/utils';
 
-function usePriceModalProvider(isClick: string) {
-  const [isOpen, setIsOpen] = useState(false);
+function usePriceModalProvider() {
   const [coordinateData, setCoordinateData] = useState(null);
-  const PriceContext = useContext(Context);
+  const { setIsPriceOpen, leftBtnValue, rightBtnValue, lowPrice, setLowPrice, highPrice, setHighPrice } =
+    useContext(Context);
+
   const initialLowPrice = priceData[0];
   const initialHighPrice = priceData[priceData.length - 1];
-  const lowPrice = initialLowPrice + (PriceContext.leftBtnValue * (initialHighPrice - initialLowPrice)) / 100;
-  const highPrice = initialLowPrice + (PriceContext.rightBtnValue * (initialHighPrice - initialLowPrice)) / 100;
+  setLowPrice(initialLowPrice + (leftBtnValue * (initialHighPrice - initialLowPrice)) / 100);
+  setHighPrice(initialLowPrice + (rightBtnValue * (initialHighPrice - initialLowPrice)) / 100);
+
   const averagePrice = moneyToWon(
     priceData.reduce((acc: number, el: number) => {
       return acc + el;
@@ -52,18 +54,17 @@ function usePriceModalProvider(isClick: string) {
     return yArr;
   }
   useEffect(() => {
-    setIsOpen(isClick === 'price');
     setCoordinateData({
       xRange: 7.3,
       yCoordinate: makeYCoordinate(),
     });
-  }, [isClick || isOpen]);
+  }, []);
 
   const onCloseModal = () => {
-    setIsOpen(false);
+    setIsPriceOpen(false);
   };
 
-  return [coordinateData, isOpen, lowPrice, highPrice, averagePrice, onCloseModal];
+  return [coordinateData, lowPrice, highPrice, averagePrice, onCloseModal];
 }
 
 export default usePriceModalProvider;

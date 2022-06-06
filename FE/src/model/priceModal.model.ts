@@ -1,5 +1,4 @@
 interface ModalProps {
-  isClick: string;
   style: unknown;
 }
 

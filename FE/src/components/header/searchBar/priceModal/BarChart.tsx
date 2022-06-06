@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Context } from 'components/context/PriceModalContext';
+import { Context } from 'components/context/ModalContext';
 
 function BarChart({ coordinate }) {
   const PriceContext = useContext(Context);

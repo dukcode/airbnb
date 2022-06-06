@@ -1,40 +1,40 @@
 import React, { useContext } from 'react';
 
-import { Context } from 'components/context/PriceModalContext';
+import { Context } from 'components/context/ModalContext';
 import * as Styled from 'components/header/searchBar/priceModal/RangeButton.style';
 
 function RangeButton() {
-  const PriceContext = useContext(Context);
+  const { rightBtnValue, leftBtnValue, setLeftBtnValue, setRightBtnValue } = useContext(Context);
   const onLeftBtnUp = (e: { target: { value: any } }) => {
-    PriceContext.setLeftBtnValue(e.target.value);
+    setLeftBtnValue(e.target.value);
   };
   const onRightBtnUp = (e: { target: { value: any } }) => {
-    PriceContext.setRightBtnValue(e.target.value);
+    setRightBtnValue(e.target.value);
   };
 
   return (
     <Styled.ButtonWrapper>
       <Styled.Input
-        width={`${PriceContext.rightBtnValue - 1}%`}
+        width={`${rightBtnValue - 1}%`}
         position="left"
         type="range"
         id="cowbell"
         name="cowbell"
         min="0"
-        max={`${PriceContext.rightBtnValue - 1}`}
-        defaultValue="0"
+        max={`${rightBtnValue - 1}`}
+        defaultValue={`${leftBtnValue}`}
         step="any"
         onChange={onLeftBtnUp}
       />
       <Styled.Input
-        width={`${99 - PriceContext.leftBtnValue}%`}
+        width={`${99 - leftBtnValue}%`}
         position="right"
         type="range"
         id="cowbell"
         name="cowbell"
-        min={`${PriceContext.leftBtnValue + 1}`}
+        min={`${leftBtnValue + 1}`}
         max="100"
-        defaultValue="100"
+        defaultValue={`${rightBtnValue}`}
         step="any"
         onChange={onRightBtnUp}
       />
