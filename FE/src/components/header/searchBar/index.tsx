@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useContext } from 'react';
+import React, { useReducer, useState, useContext, useEffect } from 'react';
 
 import * as Styled from 'components/header/searchBar/searchBar.style';
 import Line from 'components/Icons/Line';
@@ -16,7 +16,8 @@ import GuestModal from './guestModal';
 const initState = { checkIn: '날짜 입력', checkOut: '날짜 입력', price: '금액대 설정', guest: '게스트 추가' };
 
 function SearchBar() {
-  const { guestCounts, setIsDateOpen, setIsPriceOpen, setIsGuestOpen, highPrice, lowPrice } = useContext(Context);
+  const { infantCounts, guestCounts, setIsDateOpen, setIsPriceOpen, setIsGuestOpen, highPrice, lowPrice } =
+    useContext(Context);
   const [state, dispatch] = useReducer(reducer, initState);
 
   const clickItem = (keyData: string, valueData: string) => () => {
@@ -51,7 +52,7 @@ function SearchBar() {
       <PriceModal style={customStyles} />
       <Line />
       <Styled.ItemWrapper onClick={onClickModal('guest')}>
-        <SearchBarItem title="인원" contents={`게스트${guestCounts}`} />
+        <SearchBarItem title="인원" contents={`게스트${guestCounts}명, 유아${infantCounts}명`} />
       </Styled.ItemWrapper>
       <GuestModal style={guestCustomStyles} />
       <SearchIcon size={{ width: '40', height: '40' }} />
