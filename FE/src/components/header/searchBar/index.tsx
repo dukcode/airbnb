@@ -1,48 +1,61 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useContext } from 'react';
 
 import * as Styled from 'components/header/searchBar/searchBar.style';
 import Line from 'components/Icons/Line';
 import SearchBarItem from 'components/header/searchBar/searchBarItem';
 import SearchIcon from 'components/Icons/SearchIcon';
 import { ActionType, reducer } from 'components/header/searchBar/contentReducer';
+import { guestCustomStyles } from 'components/header/searchBar/guestModal/guestModal.style';
 
-import { PriceModalContext } from 'components/context/PriceModalContext';
+import { moneyToWon } from 'utils/utils';
+import { Context } from 'components/context/ModalContext';
 import PriceModal from './priceModal';
 import { customStyles } from './priceModal/PriceModalInfo.style';
+import GuestModal from './guestModal';
 
 const initState = { checkIn: '날짜 입력', checkOut: '날짜 입력', price: '금액대 설정', guest: '게스트 추가' };
 
 function SearchBar() {
+  const { guestCounts, setIsDateOpen, setIsPriceOpen, setIsGuestOpen, highPrice, lowPrice } = useContext(Context);
   const [state, dispatch] = useReducer(reducer, initState);
-  const [clickTitle, setClickTitle] = useState('');
 
-  const clickItem = (keyData, valueData) => () => {
-    setClickTitle(keyData);
+  const clickItem = (keyData: string, valueData: string) => () => {
     dispatch({
       type: ActionType.SET_CONTENTS,
       payload: { key: keyData, value: valueData },
     });
   };
 
+  const modalOpenInfo = {
+    date: setIsDateOpen,
+    price: setIsPriceOpen,
+    guest: setIsGuestOpen,
+  };
+  const onClickModal = (title: string) => () => {
+    modalOpenInfo[title](true);
+  };
+
   return (
-    <PriceModalContext>
-      <Styled.SearchBarWrapper>
-        <Styled.ItemWrapper>
-          <SearchBarItem title="체크인" contents={state.checkIn} onClick={clickItem('checkIn', '6월 5일')} />
-          <SearchBarItem title="체크아웃" contents={state.checkOut} onClick={clickItem('checkOut', '6월 5일')} />
-        </Styled.ItemWrapper>
-        <Line />
-        <Styled.ItemWrapper>
-          <SearchBarItem title="요금" contents={state.price} onClick={clickItem('price', '100,000 ~ 1,000,000')} />
-        </Styled.ItemWrapper>
-        <PriceModal style={customStyles} isClick={clickTitle} />
-        <Line />
-        <Styled.ItemWrapper>
-          <SearchBarItem title="인원" contents={state.guest} onClick={clickItem('guest', '게스트 3명, 유아 2명')} />
-        </Styled.ItemWrapper>
-        <SearchIcon size={{ width: '40', height: '40' }} />
-      </Styled.SearchBarWrapper>
-    </PriceModalContext>
+    <Styled.SearchBarWrapper>
+      <Styled.ItemWrapper onClick={onClickModal('date')}>
+        <SearchBarItem title="체크인" contents={state.checkIn} />
+        <SearchBarItem title="체크아웃" contents={state.checkOut} />
+      </Styled.ItemWrapper>
+      <Line />
+      <Styled.ItemWrapper onClick={onClickModal('price')}>
+        <SearchBarItem
+          title="요금"
+          contents={`${moneyToWon(Math.floor(lowPrice))} - ${moneyToWon(Math.floor(highPrice))}`}
+        />
+      </Styled.ItemWrapper>
+      <PriceModal style={customStyles} />
+      <Line />
+      <Styled.ItemWrapper onClick={onClickModal('guest')}>
+        <SearchBarItem title="인원" contents={`게스트${guestCounts}`} />
+      </Styled.ItemWrapper>
+      <GuestModal style={guestCustomStyles} />
+      <SearchIcon size={{ width: '40', height: '40' }} />
+    </Styled.SearchBarWrapper>
   );
 }
 
