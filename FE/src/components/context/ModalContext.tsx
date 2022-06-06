@@ -8,9 +8,10 @@ function ModalContext(props: { children: any }) {
   const [isDateOpen, setIsDateOpen] = useState(false);
   const [isPriceOpen, setIsPriceOpen] = useState(false);
   const [isGuestOpen, setIsGuestOpen] = useState(false);
-  const [lowPrice, setLowPrice] = useState(false);
-  const [highPrice, setHighPrice] = useState(false);
-  const [guestCounts, setGuestCounts] = useState(' 추가');
+  const [lowPrice, setLowPrice] = useState(0);
+  const [highPrice, setHighPrice] = useState(0);
+  const [guestCounts, setGuestCounts] = useState(1);
+  const [infantCounts, setInfantCounts] = useState(0);
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const ModalInfo = {
     leftBtnValue,
@@ -29,6 +30,8 @@ function ModalContext(props: { children: any }) {
     setHighPrice,
     guestCounts,
     setGuestCounts,
+    infantCounts,
+    setInfantCounts,
   };
 
   // eslint-disable-next-line react/destructuring-assignment
