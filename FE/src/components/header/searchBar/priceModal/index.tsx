@@ -12,7 +12,7 @@ function PriceModal({ style }: ModalProps) {
   const [coordinateData, lowPrice, highPrice, averagePrice, onCloseModal] = usePriceModalProvider();
   const { isPriceOpen } = useContext(Context);
   return (
-    <Modal isOpen={isPriceOpen} style={style} onRequestClose={onCloseModal}>
+    <Modal isOpen={isPriceOpen} style={style} onRequestClose={onCloseModal} ariaHideApp={false}>
       <Styled.ModalInfo>
         <Styled.Title>가격 범위</Styled.Title>
         <Styled.PriceWrapper>

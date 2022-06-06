@@ -11,8 +11,10 @@ function usePriceModalProvider() {
 
   const initialLowPrice = priceData[0];
   const initialHighPrice = priceData[priceData.length - 1];
-  setLowPrice(initialLowPrice + (leftBtnValue * (initialHighPrice - initialLowPrice)) / 100);
-  setHighPrice(initialLowPrice + (rightBtnValue * (initialHighPrice - initialLowPrice)) / 100);
+  useEffect(() => {
+    setLowPrice(initialLowPrice + (leftBtnValue * (initialHighPrice - initialLowPrice)) / 100);
+    setHighPrice(initialLowPrice + (rightBtnValue * (initialHighPrice - initialLowPrice)) / 100);
+  }, [leftBtnValue, rightBtnValue]);
 
   const averagePrice = moneyToWon(
     priceData.reduce((acc: number, el: number) => {
