@@ -47,7 +47,7 @@ jobs:
       run: |
           cd ./src/main/resources
           touch ./application-mysql-db.yml
-          echo "${{ secrets.PROPERTIES_MYSQL-DB }}" > ./application-mysql-db.yml
+          echo "${{ secrets.PROPERTIES_MYSQL_DB }}" > ./application-mysql-db.yml
       shell: bash
 
     ## gradle build
@@ -69,7 +69,7 @@ jobs:
       if: contains(github.ref, 'release')
       with:
           host: ${{ secrets.HOST_PROD1 }}
-          username: ec2-user
+          username: ubuntu
           key: ${{ secrets.PRIVATE_KEY }}
           envs: GITHUB_SHA
           script: |
