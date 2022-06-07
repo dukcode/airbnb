@@ -1,4 +1,5 @@
-import React, { useReducer, useState, useContext, useEffect } from 'react';
+import React, { useReducer, useContext } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import * as Styled from 'components/header/searchBar/searchBar.style';
 import Line from 'components/Icons/Line';
@@ -55,7 +56,9 @@ function SearchBar() {
         <SearchBarItem title="인원" contents={`게스트${guestCounts}명, 유아${infantCounts}명`} />
       </Styled.ItemWrapper>
       <GuestModal style={guestCustomStyles} />
-      <SearchIcon size={{ width: '40', height: '40' }} />
+      <NavLink to="/searchResult">
+        <SearchIcon size={{ width: '40', height: '40' }} />
+      </NavLink>
     </Styled.SearchBarWrapper>
   );
 }
