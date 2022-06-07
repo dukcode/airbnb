@@ -21,4 +21,15 @@ const ContentsWrapper = styled.div`
   flex-direction: column;
 `;
 
+const IconWrapper = styled.div<countType>`
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: ${({ count }) => `${count > 1 ? CALENDER_WIDTH * 2 : CALENDER_WIDTH}px`};
+  height: ${({ count }) => `${((count > 2 ? CALENDER_HEIGHT * 2 : CALENDER_HEIGHT) * 90) / 100}px`};
+  z-index: -1;
+`;
+
 export { CalenderWrapper, ContentsWrapper };
+export { CalenderWrapper, ContentsWrapper, IconWrapper, Calender };
