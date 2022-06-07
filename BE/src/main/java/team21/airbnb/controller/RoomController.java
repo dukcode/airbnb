@@ -23,9 +23,13 @@ public class RoomController {
     private final RoomService roomService;
 
     @GetMapping("/rooms/charges")
-    public List<Integer> getAvailableRoomCharges(@RequestParam LocalDate checkInDate,
-            @RequestParam LocalDate checkoutDate) {
-        return roomService.getAvailableRoomCharges(checkInDate, checkoutDate);
+    public List<Integer> getAvailableRoomCharges(
+            @RequestParam(value = "checkInDate", required = false)
+            @DateTimeFormat(iso = ISO.DATE) LocalDate checkInDate,
+            @RequestParam(value = "checkOutDate", required = false)
+            @DateTimeFormat(iso = ISO.DATE) LocalDate checkOutDate
+    ) {
+        return roomService.getAvailableRoomCharges(checkInDate, checkOutDate);
     }
 
     @GetMapping("/rooms")
@@ -37,9 +41,9 @@ public class RoomController {
 
     @GetMapping("rooms/{id}")
     public RoomDetailResponse getRoomDetail(@PathVariable Long id,
-            @RequestParam(value = "checkIn", required = false)
+            @RequestParam(value = "checkInDate", required = false)
             @DateTimeFormat(iso = ISO.DATE) LocalDate checkInDate,
-            @RequestParam(value = "checkOut", required = false)
+            @RequestParam(value = "checkOutDate", required = false)
             @DateTimeFormat(iso = ISO.DATE) LocalDate checkOutDate,
             @RequestParam(value = "adults", required = false) Integer numOfAdults,
             @RequestParam(value = "children", required = false) Integer numOfChildren,
