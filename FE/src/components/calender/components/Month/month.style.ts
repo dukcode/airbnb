@@ -9,6 +9,7 @@ interface MonthContainerPros {
 const MonthContainer = styled.div<MonthContainerPros>`
   display: grid;
   width: ${({ width }) => width};
+  height: 290px;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: ${(rowCount) => `repeat(${rowCount}, 1fr)`};
   place-content: stretch stretch;

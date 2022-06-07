@@ -11,6 +11,17 @@ type MonthInfo = {
   startDayOfWeek: number;
 };
 
+const getDateInfo = (year: number, month: number): DateType => {
+  const today = new Date(year, month + 1);
+  return {
+    today,
+    year: today.getFullYear(),
+    month: today.getMonth() + 1,
+    day: today.getDate(),
+    week: today.getDay(),
+  };
+};
+
 const getTodayDateInfo = (): DateType => {
   const today = new Date();
   return {
@@ -43,4 +54,4 @@ const getMovedMonthInfo = (year: number, month: number, movedCount: number) => {
   };
 };
 
-export { getTodayDateInfo, getCurrentMonthInfo, getMovedMonthInfo };
+export { getDateInfo, getTodayDateInfo, getCurrentMonthInfo, getMovedMonthInfo };
