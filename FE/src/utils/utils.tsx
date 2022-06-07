@@ -1,3 +1,5 @@
+import React from 'react';
+
 function moneyToWon(money: number) {
   const newMoney = String(Math.floor(money));
   const moneyArr: string[] = Array.from(newMoney);
@@ -22,4 +24,18 @@ function recursion(number: number, compareNum: number, plusNum: number) {
   return recursion(number + plusNum, compareNum, plusNum);
 }
 
-export { moneyToWon, recursion };
+function composeProvider(provider: any) {
+  // eslint-disable-next-line react/function-component-definition
+  return provider.reduce(
+    (Prev: any, Curr: any) =>
+      function ({ children }: any) {
+        return (
+          <Prev>
+            <Curr>{children}</Curr>
+          </Prev>
+        );
+      },
+  );
+}
+
+export { moneyToWon, recursion, composeProvider };
