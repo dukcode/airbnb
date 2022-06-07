@@ -16,11 +16,10 @@ import GuestModal from './guestModal';
 
 const initState = { checkIn: '날짜 입력', checkOut: '날짜 입력', price: '금액대 설정', guest: '게스트 추가' };
 
-function SearchBar() {
+function SearchBar({ isSmallSize }) {
   const { infantCounts, guestCounts, setIsDateOpen, setIsPriceOpen, setIsGuestOpen, highPrice, lowPrice } =
     useContext(Context);
   const [state, dispatch] = useReducer(reducer, initState);
-
   const clickItem = (keyData: string, valueData: string) => () => {
     dispatch({
       type: ActionType.SET_CONTENTS,
@@ -38,26 +37,31 @@ function SearchBar() {
   };
 
   return (
-    <Styled.SearchBarWrapper>
+    <Styled.SearchBarWrapper isSmallSize={isSmallSize}>
       <Styled.ItemWrapper onClick={onClickModal('date')}>
-        <SearchBarItem title="체크인" contents={state.checkIn} />
-        <SearchBarItem title="체크아웃" contents={state.checkOut} />
+        <SearchBarItem isSmallSize={isSmallSize} title="체크인" contents={state.checkIn} />
+        <SearchBarItem isSmallSize={isSmallSize} title="체크아웃" contents={state.checkOut} />
       </Styled.ItemWrapper>
-      <Line />
+      <Line size={{ width: '1', height: isSmallSize ? '26' : '44' }} />
       <Styled.ItemWrapper onClick={onClickModal('price')}>
         <SearchBarItem
+          isSmallSize={isSmallSize}
           title="요금"
           contents={`${moneyToWon(Math.floor(lowPrice))} - ${moneyToWon(Math.floor(highPrice))}`}
         />
       </Styled.ItemWrapper>
       <PriceModal style={customStyles} />
-      <Line />
+      <Line size={{ width: '1', height: isSmallSize ? '26' : '44' }} />
       <Styled.ItemWrapper onClick={onClickModal('guest')}>
-        <SearchBarItem title="인원" contents={`게스트${guestCounts}명, 유아${infantCounts}명`} />
+        <SearchBarItem
+          isSmallSize={isSmallSize}
+          title="인원"
+          contents={`게스트${guestCounts}명, 유아${infantCounts}명`}
+        />
       </Styled.ItemWrapper>
       <GuestModal style={guestCustomStyles} />
       <NavLink to="/searchResult">
-        <SearchIcon size={{ width: '40', height: '40' }} />
+        <SearchIcon size={{ width: isSmallSize ? '29' : '40', height: isSmallSize ? '29' : '40' }} />
       </NavLink>
     </Styled.SearchBarWrapper>
   );

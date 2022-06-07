@@ -10,7 +10,7 @@ function Header() {
     <Styled.Header>
       <Styled.HeaderWrapper>
         <GNB />
-        <SearchBar />
+        <SearchBar isSmallSize={false} />
       </Styled.HeaderWrapper>
     </Styled.Header>
   );

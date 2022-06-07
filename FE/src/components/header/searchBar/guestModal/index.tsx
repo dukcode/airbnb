@@ -3,7 +3,6 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 
 import { Context } from 'components/context/ModalContext';
-import { GuestModalContext } from 'components/context/GuestModalContext';
 import GuestInfo from './GuestInfo';
 
 interface ModalProps {
@@ -16,17 +15,15 @@ function GuestModal({ style }: ModalProps) {
     setIsGuestOpen(false);
   };
   return (
-    <GuestModalContext>
-      <Modal isOpen={isGuestOpen} style={style} onRequestClose={onCloseModal} ariaHideApp={false}>
-        <ModalInfoWrapper>
-          <GuestInfo type="성인" description="만 13세 이상" />
-          <Line />
-          <GuestInfo type="어린이" description="만 2세~12세" />
-          <Line />
-          <GuestInfo type="유아" description="만 2세 미만" />
-        </ModalInfoWrapper>
-      </Modal>
-    </GuestModalContext>
+    <Modal isOpen={isGuestOpen} style={style} onRequestClose={onCloseModal} ariaHideApp={false}>
+      <ModalInfoWrapper>
+        <GuestInfo type="성인" description="만 13세 이상" />
+        <Line />
+        <GuestInfo type="어린이" description="만 2세~12세" />
+        <Line />
+        <GuestInfo type="유아" description="만 2세 미만" />
+      </ModalInfoWrapper>
+    </Modal>
   );
 }
 

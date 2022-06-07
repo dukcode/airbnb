@@ -4,14 +4,14 @@ import * as Styled from 'components/header/searchBar/searchBarItem/searchBarItem
 type SearchBarItemProps = {
   title: string;
   contents: string;
-  // onClick: any;
+  isSmallSize: boolean;
 };
 
-function SearchBarItem({ title, contents }: SearchBarItemProps) {
+function SearchBarItem({ title, contents, isSmallSize }: SearchBarItemProps) {
   return (
     <Styled.Item>
-      <Styled.ItemTitle>{title}</Styled.ItemTitle>
-      <Styled.ItemContents>{contents}</Styled.ItemContents>
+      <Styled.ItemTitle isSmallSize={isSmallSize}>{title}</Styled.ItemTitle>
+      <Styled.ItemContents isSmallSize={isSmallSize}>{contents}</Styled.ItemContents>
     </Styled.Item>
   );
 }
