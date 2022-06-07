@@ -31,5 +31,12 @@ const IconWrapper = styled.div<countType>`
   z-index: -1;
 `;
 
-export { CalenderWrapper, ContentsWrapper };
+const Calender = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 390px;
+`;
+
 export { CalenderWrapper, ContentsWrapper, IconWrapper, Calender };

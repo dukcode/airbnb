@@ -23,18 +23,20 @@ const Calender = ({ count, year, month }: CalenderProps) => {
   const getNextMonthInfo = getMovedMonthInfo(year as number, month as number, -1);
 
   return (
-    <Styled.CalenderWrapper>
-      <Styled.IconWrapper>
+    <Styled.CalenderWrapper count={count as number}>
+      <Styled.IconWrapper count={count as number}>
         <Icon type={IconType.ARROW_LEFT} />
         <Icon type={IconType.ARROW_RIGHT} />
       </Styled.IconWrapper>
-      {/* <Styled.Calender> */}
-      <Title>{CalenderTitle}</Title>
-      <Styled.ContentsWrapper>
-        <WeekList />
-        <Month year={year as number} month={month as number} lastDay={lastDay} startDayOfWeek={startDayOfWeek} />
-      </Styled.ContentsWrapper>
-      {/* </Styled.Calender> */}
+      {[...new Array(count)].map((_, index) => (
+        <Styled.Calender>
+          <Title>{CalenderTitle}</Title>
+          <Styled.ContentsWrapper>
+            <WeekList />
+            <Month year={year as number} month={month as number} lastDay={lastDay} startDayOfWeek={startDayOfWeek} />
+          </Styled.ContentsWrapper>
+        </Styled.Calender>
+      ))}
     </Styled.CalenderWrapper>
   );
 };
