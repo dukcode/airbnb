@@ -15,7 +15,8 @@ declare module 'react' {
   const createContext: any;
   const useContext: any;
   const useEffect: any;
-  export { useRef, useEffect, useContext, StrictMode, createContext, useReducer, useState, MouseEventHandler };
+  const Context: any;
+  export { Context, useRef, useEffect, useContext, StrictMode, createContext, useReducer, useState, MouseEventHandler };
 }
 
 declare module 'react-router-dom' {

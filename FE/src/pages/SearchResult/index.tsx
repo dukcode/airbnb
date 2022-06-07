@@ -1,35 +1,18 @@
 import React from 'react';
 
-import styled from 'styled-components';
-import Header from 'components/header';
-import SearchBar from 'components/header/searchBar';
+import * as Styled from 'pages/SearchResult/searchResult.style';
+import SearchResultHeader from 'components/searchResult/header';
 
 function SearchResult() {
   return (
-    <div>
-      <SearchBar />
-      <ContentWrapper>
-        <RoomList />
-        <Map />
-      </ContentWrapper>
-    </div>
+    <Styled.SearchResultWrapper>
+      <SearchResultHeader />
+      <Styled.Body>
+        <Styled.RoomList />
+        <Styled.Map />
+      </Styled.Body>
+    </Styled.SearchResultWrapper>
   );
 }
-
-const ContentWrapper = styled.div`
-  display: flex;
-`;
-
-const RoomList = styled.div`
-  width: 720px;
-  height: 1000px;
-  background-color: black;
-`;
-
-const Map = styled.div`
-  width: 720px;
-  height: 1000px;
-  background-color: red;
-`;
 
 export default SearchResult;
