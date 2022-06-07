@@ -113,10 +113,12 @@ function GuestInfo({ type, description }: GuestProps) {
 const MinusIconWrapper = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 const PlusIconWrapper = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const GuestInfoWrapper = styled.div`

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import priceData from 'components/mock/priceData';
+import priceData from 'mock/priceData';
 import { Context } from 'components/context/ModalContext';
 import { moneyToWon, recursion } from 'utils/utils';
 

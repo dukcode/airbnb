@@ -16,6 +16,7 @@ const Input = styled.input`
   pointer-events: none;
   ::-webkit-slider-thumb {
     pointer-events: auto;
+    cursor: pointer;
   }
 `;
 
