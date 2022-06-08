@@ -21,7 +21,7 @@ const WeekList = ({ data, ...props }: WeekListProps) => {
       {data &&
         data.map((value) => {
           return (
-            <Styled.WeekListItem>
+            <Styled.WeekListItem key={value}>
               <Text {...textProps}>{value}</Text>
             </Styled.WeekListItem>
           );
