@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import CalenderPicker from 'components/calender';
+import CalenderPicker from 'components/calender/components/CalenderPicker';
 import { getTodayDateInfo } from 'components/calender/utils/dataUtils';
 
 export default {

@@ -10,7 +10,7 @@ const CalenderWrapper = styled.div<countType>`
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
-  width: ${({ count }) => `${CALENDER_HEIGHT * count}px`};
+  width: ${({ count }) => `${CALENDER_WIDTH * count}px`};
   height: ${`${CALENDER_HEIGHT}px`};
 `;
 
