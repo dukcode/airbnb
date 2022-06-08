@@ -10,12 +10,6 @@ const RoomList = styled.div`
   background-color: black;
 `;
 
-const Map = styled.div`
-  width: 720px;
-  height: 1000px;
-  background-color: red;
-`;
-
 const SearchResultWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,4 +18,4 @@ const SearchResultWrapper = styled.div`
   justify-content: center;
 `;
 
-export { Body, RoomList, Map, SearchResultWrapper };
+export { Body, RoomList, SearchResultWrapper };

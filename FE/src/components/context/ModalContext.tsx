@@ -12,7 +12,6 @@ function ModalContext(props: { children: any }) {
   const [highPrice, setHighPrice] = useState(0);
   const [guestCounts, setGuestCounts] = useState(1);
   const [infantCounts, setInfantCounts] = useState(0);
-  const [isSmallStyle, setIsSmallStyle] = useState(false);
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const ModalInfo = {
     leftBtnValue,
@@ -33,8 +32,6 @@ function ModalContext(props: { children: any }) {
     setGuestCounts,
     infantCounts,
     setInfantCounts,
-    isSmallStyle,
-    setIsSmallStyle,
   };
 
   // eslint-disable-next-line react/destructuring-assignment
