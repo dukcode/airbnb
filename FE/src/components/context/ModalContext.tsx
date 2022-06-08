@@ -1,8 +1,29 @@
 import React, { useState, createContext } from 'react';
 
-const Context = createContext();
+interface IModal {
+  leftBtnValue?: number;
+  setLeftBtnValue?: React.Dispatch<React.SetStateAction<number>>;
+  rightBtnValue?: number;
+  setRightBtnValue?: React.Dispatch<React.SetStateAction<number>>;
+  isDateOpen?: boolean;
+  setIsDateOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  isPriceOpen?: boolean;
+  setIsPriceOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  isGuestOpen?: boolean;
+  setIsGuestOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  lowPrice?: number;
+  setLowPrice?: React.Dispatch<React.SetStateAction<number>>;
+  highPrice?: number;
+  setHighPrice?: React.Dispatch<React.SetStateAction<number>>;
+  guestCounts?: number;
+  setGuestCounts?: React.Dispatch<React.SetStateAction<number>>;
+  infantCounts?: number;
+  setInfantCounts?: React.Dispatch<React.SetStateAction<number>>;
+}
 
-function ModalContext(props: { children: any }) {
+const Context = createContext<IModal>({});
+
+function ModalContext(props: { children: React.ReactNode }) {
   const [leftBtnValue, setLeftBtnValue] = useState(0);
   const [rightBtnValue, setRightBtnValue] = useState(100);
   const [isDateOpen, setIsDateOpen] = useState(false);

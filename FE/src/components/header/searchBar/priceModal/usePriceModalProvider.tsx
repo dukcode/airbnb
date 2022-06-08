@@ -4,14 +4,32 @@ import priceData from 'mock/priceData';
 import { Context } from 'components/context/ModalContext';
 import { moneyToWon, recursion } from 'utils/utils';
 
+interface ICoordinate {
+  xRange: number;
+  yCoordinate: number[];
+}
+
 function usePriceModalProvider() {
-  const [coordinateData, setCoordinateData] = useState(null);
-  const { setIsPriceOpen, leftBtnValue, rightBtnValue, lowPrice, setLowPrice, highPrice, setHighPrice } =
-    useContext(Context);
+  const initCoordinate: ICoordinate = { xRange: 0, yCoordinate: [] };
+  const [coordinateData, setCoordinateData] = useState(initCoordinate);
+
+  const {
+    setIsPriceOpen,
+    leftBtnValue = 0,
+    rightBtnValue = 100,
+    lowPrice,
+    setLowPrice,
+    highPrice,
+    setHighPrice,
+  } = useContext(Context);
 
   const initialLowPrice = priceData[0];
   const initialHighPrice = priceData[priceData.length - 1];
   useEffect(() => {
+    if (!setLowPrice || !setHighPrice) {
+      return;
+    }
+
     setLowPrice(initialLowPrice + (leftBtnValue * (initialHighPrice - initialLowPrice)) / 100);
     setHighPrice(initialLowPrice + (rightBtnValue * (initialHighPrice - initialLowPrice)) / 100);
   }, [leftBtnValue, rightBtnValue]);
@@ -21,6 +39,7 @@ function usePriceModalProvider() {
       return acc + el;
     }, 0) / priceData.length,
   );
+
   function makeYCoordinate() {
     const singleX: number = (initialHighPrice - initialLowPrice) / 50;
     const yArr: number[] = [];
@@ -63,7 +82,9 @@ function usePriceModalProvider() {
   }, []);
 
   const onCloseModal = () => {
-    setIsPriceOpen(false);
+    if (setIsPriceOpen) {
+      setIsPriceOpen(false);
+    }
   };
 
   return [coordinateData, lowPrice, highPrice, averagePrice, onCloseModal];

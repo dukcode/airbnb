@@ -7,11 +7,15 @@ const ButtonWrapper = styled.div`
   left: -9px;
 `;
 
-const Input = styled.input`
-  width: ${(props) => props.width};
+interface IInputProps {
+  position: string;
+}
+
+const Input = styled.input<IInputProps>`
+  width: ${({ width }) => width};
   position: absolute;
   bottom: 0px;
-  ${(props) => props.position}: 0px;
+  ${({ position }) => position}: 0px;
   -webkit-appearance: none;
   pointer-events: none;
   ::-webkit-slider-thumb {

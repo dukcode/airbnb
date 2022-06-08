@@ -4,12 +4,16 @@ import { Context } from 'components/context/ModalContext';
 import * as Styled from 'components/header/searchBar/priceModal/RangeButton.style';
 
 function RangeButton() {
-  const { rightBtnValue, leftBtnValue, setLeftBtnValue, setRightBtnValue } = useContext(Context);
+  const { rightBtnValue = 100, leftBtnValue = 0, setLeftBtnValue, setRightBtnValue } = useContext(Context);
   const onLeftBtnUp = (e: { target: { value: any } }) => {
-    setLeftBtnValue(e.target.value);
+    if (setLeftBtnValue) {
+      setLeftBtnValue(e.target.value);
+    }
   };
   const onRightBtnUp = (e: { target: { value: any } }) => {
-    setRightBtnValue(e.target.value);
+    if (setRightBtnValue) {
+      setRightBtnValue(e.target.value);
+    }
   };
 
   return (

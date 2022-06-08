@@ -18,7 +18,7 @@ interface ReducerState {
   defaultCount: number;
 }
 
-function countReducer(state: ReducerState, action: { type: string }) {
+function countReducer(state: any, action: any) {
   const { guestCount, minusBtnColor, defaultCount } = state;
   switch (action.type) {
     case 'INCREMENT':
@@ -62,6 +62,11 @@ function GuestInfo({ type, description }: GuestProps) {
 
   const onIncrease = () => {
     dispatch({ type: 'INCREMENT' });
+
+    if (!setInfantCounts || !setGuestCounts) {
+      return;
+    }
+
     if (plusBtnColor === '#828282') {
       if (type === '유아') {
         setInfantCounts((prev: number) => prev + 1);
@@ -73,15 +78,25 @@ function GuestInfo({ type, description }: GuestProps) {
 
   const onDecrease = () => {
     dispatch({ type: 'DECREMENT' });
-    if (minusBtnColor === '#828282')
+
+    if (!setInfantCounts || !setGuestCounts) {
+      return;
+    }
+
+    if (minusBtnColor === '#828282') {
       if (type === '유아') {
         setInfantCounts((prev: number) => prev - 1);
       } else {
         setGuestCounts((prev: number) => prev - 1);
       }
+    }
   };
 
   useEffect(() => {
+    if (!setAdultCount || !setChildrenCount || !setInfantCount) {
+      return;
+    }
+
     if (type === '성인') {
       setAdultCount(guestCount);
     } else if (type === '어린이') {

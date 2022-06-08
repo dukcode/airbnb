@@ -1,6 +1,14 @@
 import React, { useState, createContext } from 'react';
 
-const GuestContext = createContext();
+interface IGuest {
+  adultCount?: number;
+  setAdultCount?: React.Dispatch<React.SetStateAction<number>>;
+  childrenCount?: number;
+  setChildrenCount?: React.Dispatch<React.SetStateAction<number>>;
+  infantCount?: number;
+  setInfantCount?: React.Dispatch<React.SetStateAction<number>>;
+}
+const GuestContext = createContext<IGuest>({});
 
 function GuestModalContext(props: { children: any }) {
   const [adultCount, setAdultCount] = useState(1);

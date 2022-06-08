@@ -12,7 +12,7 @@ interface ModalProps {
 function GuestModal({ style }: ModalProps) {
   const { isGuestOpen, setIsGuestOpen } = useContext(Context);
   const onCloseModal = () => {
-    setIsGuestOpen(false);
+    if (setIsGuestOpen) setIsGuestOpen(false);
   };
   return (
     <Modal isOpen={isGuestOpen} style={style} onRequestClose={onCloseModal} ariaHideApp={false}>

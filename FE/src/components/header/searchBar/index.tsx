@@ -17,8 +17,15 @@ import GuestModal from './guestModal';
 const initState = { checkIn: '날짜 입력', checkOut: '날짜 입력', price: '금액대 설정', guest: '게스트 추가' };
 
 function SearchBar({ isSmallSize }) {
-  const { infantCounts, guestCounts, setIsDateOpen, setIsPriceOpen, setIsGuestOpen, highPrice, lowPrice } =
-    useContext(Context);
+  const {
+    infantCounts,
+    guestCounts,
+    setIsDateOpen,
+    setIsPriceOpen,
+    setIsGuestOpen,
+    highPrice = 0,
+    lowPrice = 0,
+  } = useContext(Context);
   const [state, dispatch] = useReducer(reducer, initState);
   const clickItem = (keyData: string, valueData: string) => () => {
     dispatch({

@@ -16,11 +16,11 @@ function PriceModal({ style }: ModalProps) {
       <Styled.ModalInfo>
         <Styled.Title>가격 범위</Styled.Title>
         <Styled.PriceWrapper>
-          <Styled.Price>{moneyToWon(lowPrice)}</Styled.Price>
+          <Styled.Price>{moneyToWon(lowPrice as number)}</Styled.Price>
           <Styled.RowLine>-</Styled.RowLine>
-          <Styled.Price>{moneyToWon(highPrice)}+</Styled.Price>
+          <Styled.Price>{moneyToWon(highPrice as number)}+</Styled.Price>
         </Styled.PriceWrapper>
-        <Styled.Average>평균 1박 요금은 {averagePrice} 입니다. </Styled.Average>
+        <Styled.Average>{`평균 1박 요금은 ${averagePrice} 입니다.`}</Styled.Average>
         <Styled.Graph coordinate={coordinateData} />
       </Styled.ModalInfo>
     </Modal>

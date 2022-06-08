@@ -7,7 +7,8 @@ function BarChart({ coordinate }) {
   return (
     <svg width="366" height="114" viewBox="0 0 366 114" xmlns="http://www.w3.org/2000/svg">
       {coordinate.yCoordinate.map((yCoor: number, idx: number) => {
-        const isValidRange = PriceContext.leftBtnValue <= idx * 2 && PriceContext.rightBtnValue >= idx * 2;
+        const { leftBtnValue, rightBtnValue } = PriceContext;
+        const isValidRange = (leftBtnValue as number) <= idx * 2 && (rightBtnValue as number) >= idx * 2;
 
         return (
           <path
