@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Week } from 'components/calender/constants/dateData';
 
 const getBackgroundBorderRadius = ({ isChecked, isStart, week }: BackgroundType) => {
@@ -21,7 +21,6 @@ const getBackgroundBorderRadius = ({ isChecked, isStart, week }: BackgroundType)
 const TempWrapper = styled.div`
   width: 48px;
   height: 48px;
-  cursor: pointer;
 `;
 
 interface BackgroundType {
@@ -42,11 +41,22 @@ const Background = styled.div<BackgroundType>`
 `;
 
 interface SelectAreaType {
+  isDisabled: boolean;
   isChecked: boolean;
   hoverStyles?: {
     [key: string]: string;
   };
 }
+
+const HoverStyles = css<SelectAreaType>`
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ hoverStyles }) => hoverStyles?.background || '#333'};
+  }
+  &:hover > p {
+    color: ${({ hoverStyles }) => hoverStyles?.color || '#fff'};
+  }
+`;
 
 const SelectArea = styled.div<SelectAreaType>`
   display: flex;
@@ -56,12 +66,8 @@ const SelectArea = styled.div<SelectAreaType>`
   height: 100%;
   background-color: ${({ isChecked }) => (isChecked ? '#333' : 'transparent')};
   border-radius: 50%;
-  &:hover {
-    background-color: ${({ hoverStyles }) => hoverStyles?.background || '#333'};
-  }
-  &:hover > p {
-    color: ${({ hoverStyles }) => hoverStyles?.color || '#fff'};
-  }
+  cursor: default;
+  ${({ isDisabled }) => !isDisabled && HoverStyles}
 `;
 
 export { TempWrapper, Background, SelectArea };
