@@ -1,13 +1,15 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import * as Styled from 'components/calender/components/Day/day.style';
 import { Week } from 'components/calender/constants/dateData';
 import Text from 'components/calender/components/Text';
+import { DateContext } from 'components/calender/context';
+import { setCheckIn, setCheckOut } from 'components/calender/context/action';
 
 interface DayProps {
-  isChecked?: boolean;
-  isIncluded?: boolean;
-  isDisabled?: boolean;
-  isStart?: boolean;
+  isChecked: boolean;
+  isIncluded: boolean;
+  isDisabled: boolean;
+  isStart: boolean;
   info: DayInfo;
 }
 
@@ -41,27 +43,34 @@ const Day = ({
   isStart = false,
   info: { year, month, week, day },
 }: DayProps) => {
+  const { state, dispatch } = useContext(DateContext);
+  const today = new Date(year, month - 1, day);
+  const handleClickEvent = () => {
+    if (isDisabled) return;
+    if (!state.period) {
+      setCheckIn(dispatch, today);
+      return;
+    }
+
+    const { checkIn } = state.period;
+
+    if (checkIn > today) {
+      setCheckIn(dispatch, today);
+      return;
+    }
+
+    setCheckOut(dispatch, today);
+  };
+
   return (
-    <Styled.TempWrapper>
+    <Styled.TempWrapper onClick={handleClickEvent}>
       <Styled.Background isChecked={isChecked} isIncluded={isIncluded} isStart={isStart} week={week}>
-        <Styled.SelectArea isChecked={isChecked} hoverStyles={hoverStyles}>
+        <Styled.SelectArea isChecked={isChecked} isDisabled={isDisabled} hoverStyles={hoverStyles}>
           <Text {...getTextStyle(isChecked, isDisabled)}>{day}</Text>
         </Styled.SelectArea>
       </Styled.Background>
     </Styled.TempWrapper>
   );
-};
-
-Day.defaultProps = {
-  isChecked: false,
-  isIncluded: false,
-  isDisabled: false,
-  isStart: false,
-  //   info: {
-  //     month: 5,
-  //     week: Week.Saturday,
-  //     day: 31,
-  //   },
 };
 
 export default Day;

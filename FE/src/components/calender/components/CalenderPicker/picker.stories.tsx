@@ -1,14 +1,14 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Calender from 'components/calender/components/Calender';
+import CalenderPicker from 'components/calender/components/CalenderPicker';
 import { getTodayDateInfo } from 'components/calender/utils/dataUtils';
 
 export default {
-  title: 'Calender/Calender',
-  component: Calender,
-} as ComponentMeta<typeof Calender>;
+  title: 'Calender/CalenderPicker',
+  component: CalenderPicker,
+} as ComponentMeta<typeof CalenderPicker>;
 
-const Template: ComponentStory<typeof Calender> = (args) => <Calender {...args} />;
+const Template: ComponentStory<typeof CalenderPicker> = (args) => <CalenderPicker {...args} />;
 
 const today = getTodayDateInfo();
 
