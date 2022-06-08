@@ -4,8 +4,8 @@ const SearchBarWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 916px;
-  height: 76px;
+  width: ${(props) => (props.isSmallSize ? '530' : '916')}px;
+  height: ${(props) => (props.isSmallSize ? '48' : '76')}px;
   border: 1px solid ${({ theme: { colors } }) => colors.grey4};
   border-radius: 60px;
   background: ${({ theme: { colors } }) => colors.white};

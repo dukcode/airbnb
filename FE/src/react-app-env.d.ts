@@ -12,4 +12,18 @@ declare module 'react' {
   const MouseEventHandler: any;
   const useState: any;
   export { StrictMode, useReducer, useState, MouseEventHandler };
+  const useRef: any;
+  const createContext: any;
+  const useContext: any;
+  const useEffect: any;
+  const Context: any;
+  export { Context, useRef, useEffect, useContext, StrictMode, createContext, useReducer, useState, MouseEventHandler };
+}
+
+declare module 'react-router-dom' {
+  const BrowserRouter: any;
+  const Route: any;
+  const Routes: any;
+  const NavLink: any;
+  export { NavLink, BrowserRouter, Route, Routes };
 }
