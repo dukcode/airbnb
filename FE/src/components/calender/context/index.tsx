@@ -7,7 +7,7 @@ export interface FilterType {
   end?: Date;
   filtered?: {
     [year: number]: {
-      [month: number]: number[];
+      [month: number]: Set<number>;
     };
   };
 }

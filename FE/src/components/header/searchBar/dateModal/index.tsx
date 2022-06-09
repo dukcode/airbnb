@@ -14,7 +14,7 @@ interface FilterType {
   end?: Date;
   filtered?: {
     [year: number]: {
-      [month: number]: number[];
+      [month: number]: Set<number>;
     };
   };
 }
@@ -63,7 +63,7 @@ function DateModal({ filteredDate }: DateModalProps) {
 const defaultFilter = {
   filtered: {
     2022: {
-      6: [1, 2, 3, 4, 5, 6, 7, 14, 20],
+      6: new Set([1, 2, 3, 4, 5, 6, 7, 14, 20]),
     },
   },
 };
