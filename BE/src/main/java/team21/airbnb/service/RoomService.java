@@ -35,8 +35,8 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
-    public List<RoomSearchResponse> searchRooms(RoomSearchCondition condition) {
-        List<Room> rooms = roomRepository.searchWithCondition(condition);
+    public List<RoomSearchResponse> searchRooms(RoomSearchCondition condition, Integer page) {
+        List<Room> rooms = roomRepository.searchWithCondition(condition, page);
         return rooms.stream().map(r -> RoomSearchResponse.from(r,
                         new StayDate(condition.getCheckInDate(), condition.getCheckOutDate())))
                 .collect(Collectors.toList());

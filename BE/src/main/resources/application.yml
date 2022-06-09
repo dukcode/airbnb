@@ -36,11 +36,6 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-  sql:
-    init:
-      mode: always
-      data-locations: classpath:sql/data.sql
-      schema-locations: classpath:sql/schema.sql
 
   h2:
     console:

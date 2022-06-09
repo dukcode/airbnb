@@ -13,6 +13,8 @@ import team21.airbnb.dto.request.RoomSearchCondition;
 @Repository
 public class RoomRepository {
 
+    public static final int COUNT_LIMIT = 30;
+
     @PersistenceContext
     private EntityManager em;
 
@@ -40,7 +42,7 @@ public class RoomRepository {
         return room.getId();
     }
 
-    public List<Room> searchWithCondition(RoomSearchCondition condition) {
+    public List<Room> searchWithCondition(RoomSearchCondition condition, Integer page) {
         String jpql = "select r from Room r where (not exists"
                 + " (select b from Booking b"
                 + " where (b.room = r) and not ((b.stayDate.checkOutDate < :checkInDate)"
@@ -55,10 +57,11 @@ public class RoomRepository {
         }
 
         if (!condition.isLocationNull()) {
-            jpql +=
-                    " and (r.location.longitude between :minLongitude and :maxLongitude)"
-                            + " and (r.location.latitude between :minLatitude and :maxLatitude)";
+            jpql += " and (r.location.longitude between :minLongitude and :maxLongitude)";
+            jpql += " and (r.location.latitude between :minLatitude and :maxLatitude)";
         }
+
+        jpql += " order by r.reviewStatus.count desc";
 
         TypedQuery<Room> query = em.createQuery(jpql, Room.class)
                 .setParameter("checkInDate", condition.getCheckInDate())
@@ -82,7 +85,10 @@ public class RoomRepository {
                     .setParameter("maxLatitude", condition.getEastLatitude());
         }
 
-        return query.getResultList();
+        return query
+                .setFirstResult(COUNT_LIMIT * (page - 1))
+                .setMaxResults(COUNT_LIMIT)
+                .getResultList();
     }
 
     public Optional<Room> findOne(Long id) {
