@@ -4,11 +4,6 @@ const Body = styled.div`
   display: flex;
 `;
 
-const RoomList = styled.div`
-  width: 720px;
-  height: 1000px;
-  background-color: black;
-`;
 
 const SearchResultWrapper = styled.div`
   display: flex;
@@ -18,4 +13,4 @@ const SearchResultWrapper = styled.div`
   justify-content: center;
 `;
 
-export { Body, RoomList, SearchResultWrapper };
+export { Body,  SearchResultWrapper };
