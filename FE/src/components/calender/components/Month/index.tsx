@@ -28,10 +28,10 @@ const getDayState = (today: Date, period, filter: Set<number>) => {
   const { checkIn, checkOut } = period || {};
 
   return {
-    isChecked: +checkIn === +today || +checkOut === +today,
+    isCheckIn: +checkIn === +today,
+    isCheckOut: +checkOut === +today,
     isIncluded: checkIn <= today && checkOut >= today,
     isDisabled: filter?.has(today.getDate()) || false,
-    isStart: +checkIn === +today,
   };
 };
 
