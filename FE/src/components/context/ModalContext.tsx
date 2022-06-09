@@ -19,6 +19,10 @@ interface IModal {
   setGuestCounts?: React.Dispatch<React.SetStateAction<number>>;
   infantCounts?: number;
   setInfantCounts?: React.Dispatch<React.SetStateAction<number>>;
+  checkInDate?: Date;
+  setCheckInDate?: any;
+  checkOutDate?: Date;
+  setCheckOutDate?: any;
 }
 
 const Context = createContext<IModal>({});
@@ -33,6 +37,8 @@ function ModalContext(props: { children: React.ReactNode }) {
   const [highPrice, setHighPrice] = useState(0);
   const [guestCounts, setGuestCounts] = useState(1);
   const [infantCounts, setInfantCounts] = useState(0);
+  const [checkInDate, setCheckInDate] = useState(undefined);
+  const [checkOutDate, setCheckOutDate] = useState(undefined);
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const ModalInfo = {
     leftBtnValue,
@@ -53,6 +59,10 @@ function ModalContext(props: { children: React.ReactNode }) {
     setGuestCounts,
     infantCounts,
     setInfantCounts,
+    checkInDate,
+    setCheckInDate,
+    checkOutDate,
+    setCheckOutDate,
   };
 
   // eslint-disable-next-line react/destructuring-assignment
