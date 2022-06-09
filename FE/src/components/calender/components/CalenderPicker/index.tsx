@@ -8,6 +8,11 @@ import { ICalenderProps } from 'components/calender';
 import { DateContext } from 'components/calender/context';
 import { initFilter } from 'components/calender/context/action';
 
+enum SliderDirection {
+  'LEFT',
+  'RIGHT',
+}
+
 const CalenderPicker = ({
   count = 1,
   year = new Date().getFullYear(),
@@ -15,8 +20,11 @@ const CalenderPicker = ({
   isSlider = true,
 }: ICalenderProps) => {
   const [currentDate, setCurrentDate] = useState({ year, month });
-  const getPrevMonthInfo = getMovedMonthInfo(year, month, 1);
-  const getNextMonthInfo = getMovedMonthInfo(year, month, -1);
+  const getMovedDateInfo = getMovedDate(currentDate.year, currentDate.month, 2);
+  const iconClickHandler = (direction: SliderDirection) => () => {
+    const newCurrentDate = getMovedDateInfo(direction === SliderDirection.RIGHT);
+    setCurrentDate(newCurrentDate);
+  };
 
   return (
     <Styled.CalenderWrapper count={count}>
