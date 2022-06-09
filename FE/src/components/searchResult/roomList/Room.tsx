@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import * as Styled from 'components/searchResult/roomList/room.style';
 import HeartIcon from 'components/Icons/heartIcon';
 import StarIcon from 'components/Icons/StarIcon';
 import { moneyToWon } from 'utils/utils';
+// import { Context } from 'components/context/ModalContext';
 
 interface RoomProps {
   roomInfo: {
@@ -13,13 +14,14 @@ interface RoomProps {
     numOfReviews: number;
     roomCharge: number;
     rate: number;
+    imageUrl: string;
   };
 }
 
-function Room({ roomInfo: { allAmount, name, maxNumOfGuests, numOfReviews, roomCharge, rate } }: RoomProps) {
+function Room({ roomInfo: { allAmount, name, maxNumOfGuests, numOfReviews, roomCharge, rate, imageUrl } }: RoomProps) {
   return (
     <Styled.RoomWrapper>
-      <Styled.Thumbnail />
+      <Styled.Thumbnail imgUrl={imageUrl} />
       <Styled.Description>
         <Styled.InfoWrapper>
           <Styled.Info>

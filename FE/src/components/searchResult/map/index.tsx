@@ -1,10 +1,13 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable react/no-this-in-sfc */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-import { latLng } from 'mock/coordinates';
 import { Context } from 'components/context/ModalContext';
 import { moneyToWon } from 'utils/utils';
-import { MapWrapper, SearchMap } from './Map.style';
+import { GuestContext } from 'components/context/GuestModalContext';
+import roomListApis from 'apis/roomListApi';
+import CheckIcon from 'components/Icons/CheckIcon';
+import * as Styled from './Map.style';
 
 type GoogleGeoCodingResponse = {
   results: { geometry: { location: { lat: number; lng: number } } }[];
@@ -20,12 +23,93 @@ declare global {
 }
 
 function Map() {
-  const { filteredData } = useContext(Context);
+  const {
+    isReSearch,
+    setIsResearch,
+    filteredData,
+    highPrice = 0,
+    lowPrice = 0,
+    infantCounts,
+    guestCounts,
+    setFilteredData,
+  } = useContext(Context);
+  const [centerCoors, setCenterCoors] = useState({ lat: 34.397, lng: 140.644 });
+  const [zoomLvl, setZoomLvl] = useState(4);
+  const { adultCount, childrenCount } = useContext(GuestContext);
+  const onClickReSearch = () => {
+    if (isReSearch === 0) {
+      setIsResearch((prev) => prev + 1);
+    } else {
+      setIsResearch((prev) => prev - 1);
+    }
+  };
   useEffect(() => {
     function initMap(): void {
-      const map = new google.maps.Map(document.getElementById('map') as HTMLElement, {});
+      const map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+        center: centerCoors,
+        zoom: zoomLvl,
+      });
+      console.log(map.getBounds());
       const markers: any[] = [];
+      map.addListener('zoom_changed', (e) => {
+        setZoomLvl(map.getZoom());
 
+        if (isReSearch === 0) {
+          const filteredDatas = {
+            checkInDate: '2022-06-23',
+            checkOutDate: '2022-06-30',
+            minRoomCharge: lowPrice,
+            maxRoomCharge: highPrice,
+            numOfGuests: guestCounts,
+            numOfAdults: adultCount,
+            numOfChildren: childrenCount,
+            numOfInfants: infantCounts,
+            westLatitude: map.getBounds().Ua.h,
+            northLongitude: map.getBounds().Ab.j,
+            eastLatitude: map.getBounds().Ua.j,
+            southLongitude: map.getBounds().Ab.h,
+            page: 1,
+          };
+
+          const fetchRoomList = async () => {
+            const roomList = await roomListApis.getFilteredRooms({ filteredDatas });
+            setFilteredData(roomList);
+          };
+          fetchRoomList();
+        }
+      });
+      map.addListener('dragend', (e) => {
+        if (isReSearch === 0) {
+          const filteredDatas = {
+            checkInDate: '2022-06-23',
+            checkOutDate: '2022-06-30',
+            minRoomCharge: lowPrice,
+            maxRoomCharge: highPrice,
+            numOfGuests: guestCounts,
+            numOfAdults: adultCount,
+            numOfChildren: childrenCount,
+            numOfInfants: infantCounts,
+            westLatitude: map.getBounds().Ua.h,
+            northLongitude: map.getBounds().Ab.j,
+            eastLatitude: map.getBounds().Ua.j,
+            southLongitude: map.getBounds().Ab.h,
+            page: 1,
+          };
+          const centerCoor = {
+            lat:
+              map.getBounds().Ab.h + map.getBounds().Ab.j === 0 ? 1 : (map.getBounds().Ab.h + map.getBounds().Ab.j) / 2,
+            lng:
+              map.getBounds().Ua.h + map.getBounds().Ua.j === 0 ? 1 : (map.getBounds().Ua.h + map.getBounds().Ua.j) / 2,
+          };
+          setCenterCoors(centerCoor);
+
+          const fetchRoomList = async () => {
+            const roomList = await roomListApis.getFilteredRooms({ filteredDatas });
+            setFilteredData(roomList);
+          };
+          fetchRoomList();
+        }
+      });
       filteredData.forEach((coordinates) => {
         const marker = new google.maps.Marker({
           position: { lat: coordinates.longitude, lng: coordinates.latitude },
@@ -56,16 +140,23 @@ function Map() {
       for (let i = 0; i < markers.length; i += 1) {
         bounds.extend(markers[i].getPosition());
       }
-      map.fitBounds(bounds);
     }
     window.initMap = initMap;
     initMap();
-  }, [filteredData]);
+  }, [filteredData, isReSearch, centerCoors]);
 
   return (
-    <MapWrapper>
-      <SearchMap id="map" />
-    </MapWrapper>
+    <Styled.MapWrapper>
+      <Styled.SearchMap id="map" />
+      <Styled.ControlDiv onClick={onClickReSearch}>
+        <Styled.ControlUI>
+          <Styled.ControlText>재검색하기</Styled.ControlText>
+          <Styled.CheckWrapper>
+            <CheckIcon color={isReSearch === 0 ? 'black' : 'lightgrey'} />
+          </Styled.CheckWrapper>
+        </Styled.ControlUI>
+      </Styled.ControlDiv>
+    </Styled.MapWrapper>
   );
 }
 

@@ -23,6 +23,8 @@ interface IModal {
   setFilteredData?: any;
   isClickSearch?: boolean;
   setIsClickSearch?: any;
+  isReSearch?: number;
+  setIsResearch?: any;
 }
 
 const Context = createContext<IModal>({});
@@ -39,6 +41,7 @@ function ModalContext(props: { children: React.ReactNode }) {
   const [infantCounts, setInfantCounts] = useState(0);
   const [filteredData, setFilteredData] = useState([]);
   const [isClickSearch, setIsClickSearch] = useState(false);
+  const [isReSearch, setIsResearch] = useState(0);
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const ModalInfo = {
     leftBtnValue,
@@ -63,6 +66,8 @@ function ModalContext(props: { children: React.ReactNode }) {
     setFilteredData,
     isClickSearch,
     setIsClickSearch,
+    isReSearch,
+    setIsResearch,
   };
 
   // eslint-disable-next-line react/destructuring-assignment

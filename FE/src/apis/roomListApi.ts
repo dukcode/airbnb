@@ -1,7 +1,7 @@
 import { client, PATH } from './client';
 
 interface filteredProps {
-  filteredData: {
+  filteredDatas: {
     checkInDate: string;
     checkOutDate: string;
     minRoomCharge?: number;
@@ -10,11 +10,16 @@ interface filteredProps {
     numOfAdults?: number;
     numOfChildren?: number;
     numOfInfants?: number;
+    westLatitude?: number;
+    northLongitude?: number;
+    eastLatitude?: number;
+    southLongitude?: number;
+    page: number;
   };
 }
 const roomListApis = {
   getFilteredRooms: async ({
-    filteredData: {
+    filteredDatas: {
       checkInDate,
       checkOutDate,
       minRoomCharge,
@@ -23,6 +28,11 @@ const roomListApis = {
       numOfAdults,
       numOfChildren,
       numOfInfants,
+      westLatitude,
+      northLongitude,
+      eastLatitude,
+      southLongitude,
+      page,
     },
   }: filteredProps) => {
     const options = {
@@ -35,6 +45,11 @@ const roomListApis = {
         numOfAdults,
         numOfChildren,
         numOfInfants,
+        westLatitude,
+        northLongitude,
+        eastLatitude,
+        southLongitude,
+        page,
       },
     };
     const response = await client.get(PATH, options);

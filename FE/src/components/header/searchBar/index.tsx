@@ -27,7 +27,7 @@ function SearchBar({ isSmallSize }) {
     setIsGuestOpen,
     highPrice = 0,
     lowPrice = 0,
-    setFilteredData = [],
+    setFilteredData,
     setIsClickSearch,
   } = useContext(Context);
   const { adultCount, childrenCount } = useContext(GuestContext);
@@ -48,7 +48,7 @@ function SearchBar({ isSmallSize }) {
     modalOpenInfo[title](true);
   };
   const onClickSearch = () => {
-    const filteredData = {
+    const filteredDatas = {
       checkInDate: '2022-06-23',
       checkOutDate: '2022-06-30',
       minRoomCharge: lowPrice,
@@ -57,10 +57,12 @@ function SearchBar({ isSmallSize }) {
       numOfAdults: adultCount,
       numOfChildren: childrenCount,
       numOfInfants: infantCounts,
+      page: 1,
     };
     const fetchRoomList = async () => {
-      const roomList = await roomListApis.getFilteredRooms({ filteredData });
+      const roomList = await roomListApis.getFilteredRooms({ filteredDatas });
       setFilteredData(roomList);
+      console.log(roomList);
     };
     fetchRoomList();
     setIsClickSearch(true);

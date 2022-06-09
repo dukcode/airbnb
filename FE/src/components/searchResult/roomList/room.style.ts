@@ -1,17 +1,18 @@
 import styled from 'styled-components';
 
-import TestRoomImg from 'assets/Images/thumbnail.png';
-
+interface Thumbnails {
+  imgUrl: string;
+}
 const RoomWrapper = styled.div`
   width: 100%;
   height: 200px;
   display: flex;
 `;
 
-const Thumbnail = styled.img`
+const Thumbnail = styled.img<Thumbnails>`
   width: 330px;
   height: 200px;
-  background: url(${TestRoomImg});
+  background: url(${({ imgUrl }) => imgUrl});
   border-radius: 10px;
 `;
 
