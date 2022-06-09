@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import * as Styled from 'components/header/searchBar/searchBar.style';
@@ -10,9 +10,10 @@ import { guestCustomStyles } from 'components/header/searchBar/guestModal/guestM
 
 import { moneyToWon } from 'utils/utils';
 import { Context } from 'components/context/ModalContext';
-import PriceModal from './priceModal';
-import { customStyles } from './priceModal/PriceModalInfo.style';
-import GuestModal from './guestModal';
+import PriceModal from 'components/header/searchBar/priceModal';
+import { customStyles } from 'components/header/searchBar/priceModal/PriceModalInfo.style';
+import GuestModal from 'components/header/searchBar/guestModal';
+import DateModal from 'components/header/searchBar/dateModal';
 
 const initState = { checkIn: '날짜 입력', checkOut: '날짜 입력', price: '금액대 설정', guest: '게스트 추가' };
 
@@ -25,8 +26,11 @@ function SearchBar({ isSmallSize }) {
     setIsGuestOpen,
     highPrice = 0,
     lowPrice = 0,
+    checkInDate,
+    checkOutDate,
   } = useContext(Context);
   const [state, dispatch] = useReducer(reducer, initState);
+
   const clickItem = (keyData: string, valueData: string) => () => {
     dispatch({
       type: ActionType.SET_CONTENTS,
@@ -45,6 +49,7 @@ function SearchBar({ isSmallSize }) {
 
   return (
     <Styled.SearchBarWrapper isSmallSize={isSmallSize}>
+      <DateModal />
       <Styled.ItemWrapper onClick={onClickModal('date')}>
         <SearchBarItem isSmallSize={isSmallSize} title="체크인" contents={state.checkIn} />
         <SearchBarItem isSmallSize={isSmallSize} title="체크아웃" contents={state.checkOut} />
