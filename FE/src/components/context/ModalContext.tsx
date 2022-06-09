@@ -19,6 +19,10 @@ interface IModal {
   setGuestCounts?: React.Dispatch<React.SetStateAction<number>>;
   infantCounts?: number;
   setInfantCounts?: React.Dispatch<React.SetStateAction<number>>;
+  filteredData?: any;
+  setFilteredData?: any;
+  isClickSearch?: boolean;
+  setIsClickSearch?: any;
 }
 
 const Context = createContext<IModal>({});
@@ -33,6 +37,8 @@ function ModalContext(props: { children: React.ReactNode }) {
   const [highPrice, setHighPrice] = useState(0);
   const [guestCounts, setGuestCounts] = useState(1);
   const [infantCounts, setInfantCounts] = useState(0);
+  const [filteredData, setFilteredData] = useState([]);
+  const [isClickSearch, setIsClickSearch] = useState(false);
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const ModalInfo = {
     leftBtnValue,
@@ -53,6 +59,10 @@ function ModalContext(props: { children: React.ReactNode }) {
     setGuestCounts,
     infantCounts,
     setInfantCounts,
+    filteredData,
+    setFilteredData,
+    isClickSearch,
+    setIsClickSearch,
   };
 
   // eslint-disable-next-line react/destructuring-assignment

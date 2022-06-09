@@ -1,11 +1,22 @@
 import React from 'react';
 
-import * as Styled from 'components/searchResult/roomList/roomList.style';
+import * as Styled from 'components/searchResult/roomList/room.style';
 import HeartIcon from 'components/Icons/heartIcon';
 import StarIcon from 'components/Icons/StarIcon';
 import { moneyToWon } from 'utils/utils';
 
-function Room() {
+interface RoomProps {
+  roomInfo: {
+    allAmount: number;
+    name: string;
+    maxNumOfGuests: number;
+    numOfReviews: number;
+    roomCharge: number;
+    rate: number;
+  };
+}
+
+function Room({ roomInfo: { allAmount, name, maxNumOfGuests, numOfReviews, roomCharge, rate } }: RoomProps) {
   return (
     <Styled.RoomWrapper>
       <Styled.Thumbnail />
@@ -13,9 +24,9 @@ function Room() {
         <Styled.InfoWrapper>
           <Styled.Info>
             <Styled.Location>서초구의 아파트 전체</Styled.Location>
-            <Styled.RoomTitle>Spacious and Comfortable cozy house #4</Styled.RoomTitle>
+            <Styled.RoomTitle>{name}</Styled.RoomTitle>
             <Styled.Option>
-              최대 인원 3명·원룸·침대 1개·욕실 1개 <br />
+              최대 인원 {maxNumOfGuests}명·원룸·침대 1개·욕실 1개 <br />
               주방·무선 인터넷·에어컨·헤어드라이어
             </Styled.Option>
           </Styled.Info>
@@ -24,15 +35,15 @@ function Room() {
         <Styled.PointWrapper>
           <Styled.Point>
             <StarIcon size={{ width: '13.33', height: '12.68' }} />
-            <Styled.Rating>4.80</Styled.Rating>
-            <Styled.Review>(후기 127개)</Styled.Review>
+            <Styled.Rating>{rate}</Styled.Rating>
+            <Styled.Review>({numOfReviews})</Styled.Review>
           </Styled.Point>
           <Styled.Charge>
             <Styled.DayChargeWrapper>
-              <Styled.DayCharge>{moneyToWon(82953)}</Styled.DayCharge>
+              <Styled.DayCharge>{moneyToWon(roomCharge)}</Styled.DayCharge>
               <Styled.Day>/박</Styled.Day>
             </Styled.DayChargeWrapper>
-            <Styled.TotalCost>총액 {moneyToWon(1493159)}</Styled.TotalCost>
+            <Styled.TotalCost>총액 {moneyToWon(allAmount)}</Styled.TotalCost>
           </Styled.Charge>
         </Styled.PointWrapper>
       </Styled.Description>

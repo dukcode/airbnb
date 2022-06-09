@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import * as Styled from 'components/header/searchBar/searchBar.style';
@@ -8,8 +8,10 @@ import SearchIcon from 'components/Icons/SearchIcon';
 import { ActionType, reducer } from 'components/header/searchBar/contentReducer';
 import { guestCustomStyles } from 'components/header/searchBar/guestModal/guestModal.style';
 
+import roomListApis from 'apis/roomListApi';
 import { moneyToWon } from 'utils/utils';
 import { Context } from 'components/context/ModalContext';
+import { GuestContext } from 'components/context/GuestModalContext';
 import PriceModal from './priceModal';
 import { customStyles } from './priceModal/PriceModalInfo.style';
 import GuestModal from './guestModal';
@@ -25,7 +27,10 @@ function SearchBar({ isSmallSize }) {
     setIsGuestOpen,
     highPrice = 0,
     lowPrice = 0,
+    setFilteredData = [],
+    setIsClickSearch,
   } = useContext(Context);
+  const { adultCount, childrenCount } = useContext(GuestContext);
   const [state, dispatch] = useReducer(reducer, initState);
   const clickItem = (keyData: string, valueData: string) => () => {
     dispatch({
@@ -41,6 +46,24 @@ function SearchBar({ isSmallSize }) {
   };
   const onClickModal = (title: string) => () => {
     modalOpenInfo[title](true);
+  };
+  const onClickSearch = () => {
+    const filteredData = {
+      checkInDate: '2022-06-23',
+      checkOutDate: '2022-06-30',
+      minRoomCharge: lowPrice,
+      maxRoomCharge: highPrice,
+      numOfGuests: guestCounts,
+      numOfAdults: adultCount,
+      numOfChildren: childrenCount,
+      numOfInfants: infantCounts,
+    };
+    const fetchRoomList = async () => {
+      const roomList = await roomListApis.getFilteredRooms({ filteredData });
+      setFilteredData(roomList);
+    };
+    fetchRoomList();
+    setIsClickSearch(true);
   };
 
   return (
@@ -67,7 +90,7 @@ function SearchBar({ isSmallSize }) {
         />
       </Styled.ItemWrapper>
       <GuestModal style={guestCustomStyles} />
-      <NavLink to="/searchResult">
+      <NavLink onClick={onClickSearch} to="/searchResult">
         <SearchIcon size={{ width: isSmallSize ? '29' : '40', height: isSmallSize ? '29' : '40' }} />
       </NavLink>
     </Styled.SearchBarWrapper>
