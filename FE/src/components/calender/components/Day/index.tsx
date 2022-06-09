@@ -36,6 +36,35 @@ const hoverStyles = {
   color: '#fff',
 };
 
+const createClickHandler = (today, checkIn, setCheckedDate, dispatch, filteredDate) => () => {
+  if (!checkIn || checkIn > today) {
+    setCheckIn(dispatch, today);
+    if (setCheckedDate) setCheckedDate(today);
+    return;
+  }
+
+  if (!isFilteredDate(checkIn, today, filteredDate)) {
+    setCheckOut(dispatch, today);
+    if (setCheckedDate) setCheckedDate(undefined, today);
+  }
+};
+
+const isFilteredDate = (checkIn: Date, checkOut: Date, filteredDate = {}) => {
+  const date = new Date(checkIn);
+
+  while (filteredDate && +date !== +checkOut) {
+    const [year, month, day] = [date.getFullYear(), date.getMonth() + 1, date.getDate() + 1];
+
+    if (filteredDate?.[year]?.[month]?.has(day)) {
+      return true;
+    }
+
+    date.setDate(day);
+  }
+
+  return false;
+};
+
 const Day = ({
   isCheckIn = false,
   isCheckOut = false,
@@ -45,37 +74,9 @@ const Day = ({
 }: DayProps) => {
   const { state, dispatch, setCheckedDate } = useContext(DateContext);
   const today = new Date(year, month - 1, day);
-  const handleClickEvent = () => {
-    if (isDisabled) return;
-
-    if (!state.period?.checkIn || state?.period?.checkIn > today) {
-      setCheckIn(dispatch, today);
-      if (setCheckedDate) setCheckedDate(today);
-      return;
-    }
-
-    if (!isFilteredDate(state?.period?.checkIn, today)) {
-      setCheckOut(dispatch, today);
-      if (setCheckedDate) setCheckedDate(undefined, today);
-    }
-  };
-
-  const isFilteredDate = (checkIn: Date, checkOut: Date) => {
-    const filteredDate = state?.filter?.filtered || {};
-    const date = new Date(checkIn);
-
-    while (filteredDate && +date !== +checkOut) {
-      const [year, month, day] = [date.getFullYear(), date.getMonth() + 1, date.getDate() + 1];
-
-      if (filteredDate?.[year]?.[month]?.has(day)) {
-        return true;
-      }
-
-      date.setDate(day);
-    }
-
-    return false;
-  };
+  const handleClickEvent = isDisabled
+    ? undefined
+    : createClickHandler(today, state?.period?.checkIn, setCheckedDate, dispatch, state?.filter?.filtered);
 
   return (
     <Styled.TempWrapper onClick={handleClickEvent}>
