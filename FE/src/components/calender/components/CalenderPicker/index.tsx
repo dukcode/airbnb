@@ -20,7 +20,7 @@ const CalenderPicker = ({
   isSlider = true,
 }: ICalenderProps) => {
   const [currentDate, setCurrentDate] = useState({ year, month });
-  const getMovedDateInfo = getMovedDate(currentDate.year, currentDate.month, 2);
+  const getMovedDateInfo = getMovedDate(currentDate.year, currentDate.month, 1);
   const iconClickHandler = (direction: SliderDirection) => () => {
     const newCurrentDate = getMovedDateInfo(direction === SliderDirection.RIGHT);
     setCurrentDate(newCurrentDate);

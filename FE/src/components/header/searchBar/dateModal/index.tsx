@@ -27,7 +27,7 @@ function DateModal({ filteredDate }: DateModalProps) {
   };
 
   const getCalendarProps = () => {
-    const today = new Date();
+    const today = checkInDate || new Date();
     return {
       count: 2,
       year: today.getFullYear(),
