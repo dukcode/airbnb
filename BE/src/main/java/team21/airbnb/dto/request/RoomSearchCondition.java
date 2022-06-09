@@ -14,13 +14,13 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @AllArgsConstructor
 public class RoomSearchCondition {
 
-    private Double westLongitude;
+    private Double westLatitude;
 
-    private Double northLatitude;
+    private Double northLongitude;
 
-    private Double eastLongitude;
+    private Double eastLatitude;
 
-    private Double southLatitude;
+    private Double southLongitude;
 
     @DateTimeFormat(iso = ISO.DATE)
     private LocalDate checkInDate;

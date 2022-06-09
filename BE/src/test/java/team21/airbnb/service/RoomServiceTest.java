@@ -75,10 +75,10 @@ class RoomServiceTest {
     public void searchRoom() throws Exception {
         // given
         RoomSearchCondition condition = new RoomSearchCondition(
-                30.0,
-                140.0,
-                40.0,
                 130.0,
+                40.0,
+                140.0,
+                30.0,
                 LocalDate.of(2022, 6, 10),
                 LocalDate.of(2022, 6, 13),
                 0,

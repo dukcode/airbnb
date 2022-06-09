@@ -55,10 +55,10 @@ public class RoomRepository {
                 .setParameter("numOfGuests", condition.getNumOfGuests())
                 .setParameter("minRoomCharge", condition.getMinRoomCharge())
                 .setParameter("maxRoomCharge", condition.getMaxRoomCharge())
-                .setParameter("minLongitude", condition.getWestLongitude())
-                .setParameter("maxLongitude", condition.getEastLongitude())
-                .setParameter("minLatitude", condition.getSouthLatitude())
-                .setParameter("maxLatitude", condition.getNorthLatitude())
+                .setParameter("minLongitude", condition.getSouthLongitude())
+                .setParameter("maxLongitude", condition.getNorthLongitude())
+                .setParameter("minLatitude", condition.getWestLatitude())
+                .setParameter("maxLatitude", condition.getEastLatitude())
                 .getResultList();
     }
 
