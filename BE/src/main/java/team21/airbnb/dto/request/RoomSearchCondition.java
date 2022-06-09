@@ -40,4 +40,16 @@ public class RoomSearchCondition {
 
     private Integer numOfInfants;
 
+    public boolean isLocationNull() {
+        return westLatitude == null || northLongitude == null
+                || eastLatitude == null || southLongitude == null;
+    }
+
+    public boolean isChargeRangeNull() {
+        return minRoomCharge == null || maxRoomCharge == null;
+    }
+
+    public boolean isNumOfGuestsNull() {
+        return numOfGuests == null;
+    }
 }

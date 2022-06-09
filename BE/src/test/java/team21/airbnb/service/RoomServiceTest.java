@@ -57,7 +57,7 @@ class RoomServiceTest {
                 new RoomCondition(3, 0, 1, 1),
                 new RoomChargeInformation(82953, 25996, 0.04),
                 new ReviewStatus(4.80, 127),
-                new Location(136.9896, 37.5499));
+                new Location(126.9896, 37.5499));
 
         Booking booking = new Booking(
                 BookingStatus.BOOKED,
@@ -75,9 +75,9 @@ class RoomServiceTest {
     public void searchRoom() throws Exception {
         // given
         RoomSearchCondition condition = new RoomSearchCondition(
-                130.0,
+                120.0,
                 40.0,
-                140.0,
+                130.0,
                 30.0,
                 LocalDate.of(2022, 6, 10),
                 LocalDate.of(2022, 6, 13),

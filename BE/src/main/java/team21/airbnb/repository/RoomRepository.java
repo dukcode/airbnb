@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import team21.airbnb.domain.Room;
 import team21.airbnb.dto.request.RoomSearchCondition;
@@ -40,26 +41,48 @@ public class RoomRepository {
     }
 
     public List<Room> searchWithCondition(RoomSearchCondition condition) {
-        return em.createQuery(
-                        "select r from Room r where (not exists"
-                                + " (select b from Booking b"
-                                + " where (b.room = r) and not ((b.stayDate.checkOutDate < :checkInDate)"
-                                + " or (b.stayDate.checkInDate > :checkOutDate))))"
-                                + " and (r.roomCondition.maxNumOfGuests >= :numOfGuests)"
-                                + " and (r.roomChargeInfo.roomCharge between :minRoomCharge and :maxRoomCharge)"
-                                + " and (r.location.longitude between :minLongitude and :maxLongitude)"
-                                + " and (r.location.latitude between :minLatitude and :maxLatitude)",
-                        Room.class)
+        String jpql = "select r from Room r where (not exists"
+                + " (select b from Booking b"
+                + " where (b.room = r) and not ((b.stayDate.checkOutDate < :checkInDate)"
+                + " or (b.stayDate.checkInDate > :checkOutDate))))";
+
+        if (!condition.isNumOfGuestsNull()) {
+            jpql += " and (r.roomCondition.maxNumOfGuests >= :numOfGuests)";
+        }
+
+        if (!condition.isChargeRangeNull()) {
+            jpql += " and (r.roomChargeInfo.roomCharge between :minRoomCharge and :maxRoomCharge)";
+        }
+
+        if (!condition.isLocationNull()) {
+            jpql +=
+                    " and (r.location.longitude between :minLongitude and :maxLongitude)"
+                            + " and (r.location.latitude between :minLatitude and :maxLatitude)";
+        }
+
+        TypedQuery<Room> query = em.createQuery(jpql, Room.class)
                 .setParameter("checkInDate", condition.getCheckInDate())
-                .setParameter("checkOutDate", condition.getCheckOutDate())
-                .setParameter("numOfGuests", condition.getNumOfGuests())
-                .setParameter("minRoomCharge", condition.getMinRoomCharge())
-                .setParameter("maxRoomCharge", condition.getMaxRoomCharge())
-                .setParameter("minLongitude", condition.getSouthLongitude())
-                .setParameter("maxLongitude", condition.getNorthLongitude())
-                .setParameter("minLatitude", condition.getWestLatitude())
-                .setParameter("maxLatitude", condition.getEastLatitude())
-                .getResultList();
+                .setParameter("checkOutDate", condition.getCheckOutDate());
+
+        if (!condition.isNumOfGuestsNull()) {
+            query = query.setParameter("numOfGuests", condition.getNumOfGuests());
+        }
+
+        if (!condition.isChargeRangeNull()) {
+            query = query
+                    .setParameter("minRoomCharge", condition.getMinRoomCharge())
+                    .setParameter("maxRoomCharge", condition.getMaxRoomCharge());
+        }
+
+        if (!condition.isLocationNull()) {
+            query = query
+                    .setParameter("minLongitude", condition.getSouthLongitude())
+                    .setParameter("maxLongitude", condition.getNorthLongitude())
+                    .setParameter("minLatitude", condition.getWestLatitude())
+                    .setParameter("maxLatitude", condition.getEastLatitude());
+        }
+
+        return query.getResultList();
     }
 
     public Optional<Room> findOne(Long id) {
