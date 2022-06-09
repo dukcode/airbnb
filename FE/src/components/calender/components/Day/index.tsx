@@ -54,8 +54,27 @@ const Day = ({
       return;
     }
 
-    setCheckOut(dispatch, today);
-    if (setCheckedDate) setCheckedDate(undefined, today);
+    if (!isFilteredDate(state?.period?.checkIn, today)) {
+      setCheckOut(dispatch, today);
+      if (setCheckedDate) setCheckedDate(undefined, today);
+    }
+  };
+
+  const isFilteredDate = (checkIn: Date, checkOut: Date) => {
+    const filteredDate = state?.filter?.filtered || {};
+    const date = new Date(checkIn);
+
+    while (filteredDate && +date !== +checkOut) {
+      const [year, month, day] = [date.getFullYear(), date.getMonth() + 1, date.getDate() + 1];
+
+      if (filteredDate?.[year]?.[month]?.has(day)) {
+        return true;
+      }
+
+      date.setDate(day);
+    }
+
+    return false;
   };
 
   return (
