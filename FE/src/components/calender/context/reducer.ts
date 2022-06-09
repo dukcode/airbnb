@@ -1,12 +1,13 @@
 import { ActionType } from 'components/calender/context/action';
 import { initState } from 'components/calender/context';
 
-const initFilter = (state, payload) => {
+const initFilter = (state, { filter }) => {
   const { state: prevState } = state;
   const newState = {
     ...prevState,
-    filter: { ...payload },
+    filter,
   };
+
   return { ...state, state: newState };
 };
 

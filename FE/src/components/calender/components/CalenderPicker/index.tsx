@@ -13,16 +13,11 @@ const CalenderPicker = ({
   year = new Date().getFullYear(),
   month = new Date().getMonth() + 1,
   isSlider = true,
-  filter,
 }: ICalenderProps) => {
   const { dispatch } = useContext(DateContext);
   const [currentDate, setCurrentDate] = useState({ year, month });
   const getPrevMonthInfo = getMovedMonthInfo(year, month, 1);
   const getNextMonthInfo = getMovedMonthInfo(year, month, -1);
-
-  useEffect(() => {
-    initFilter(dispatch, filter);
-  }, []);
 
   return (
     <Styled.CalenderWrapper count={count}>
