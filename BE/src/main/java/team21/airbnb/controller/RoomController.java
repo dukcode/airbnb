@@ -33,10 +33,10 @@ public class RoomController {
     }
 
     @GetMapping("/rooms")
-    public List<RoomSearchResponse> listRooms(RoomSearchCondition searchCondition) {
+    public List<RoomSearchResponse> listRooms(RoomSearchCondition searchCondition, Integer page) {
         System.out.println("request = " + searchCondition);
 
-        return roomService.searchRooms(searchCondition);
+        return roomService.searchRooms(searchCondition, page);
     }
 
     @GetMapping("rooms/{id}")

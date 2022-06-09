@@ -88,7 +88,7 @@ class RoomServiceTest {
         );
 
         // when
-        List<RoomSearchResponse> roomSearchResponses = roomService.searchRooms(condition);
+        List<RoomSearchResponse> roomSearchResponses = roomService.searchRooms(condition, 0);
 
         ObjectMapper objectMapper = new ObjectMapper();
         String s = objectMapper.writeValueAsString(roomSearchResponses);
