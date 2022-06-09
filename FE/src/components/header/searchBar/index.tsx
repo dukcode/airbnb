@@ -47,12 +47,15 @@ function SearchBar({ isSmallSize }) {
     modalOpenInfo[title](true);
   };
 
+  const parsedDateToString = (date: Date | undefined) =>
+    date ? `${date.getMonth() + 1}월 ${date.getDate()}일` : '날짜 입력';
+
   return (
     <Styled.SearchBarWrapper isSmallSize={isSmallSize}>
       <DateModal />
       <Styled.ItemWrapper onClick={onClickModal('date')}>
-        <SearchBarItem isSmallSize={isSmallSize} title="체크인" contents={state.checkIn} />
-        <SearchBarItem isSmallSize={isSmallSize} title="체크아웃" contents={state.checkOut} />
+        <SearchBarItem isSmallSize={isSmallSize} title="체크인" contents={parsedDateToString(checkInDate)} />
+        <SearchBarItem isSmallSize={isSmallSize} title="체크아웃" contents={parsedDateToString(checkOutDate)} />
       </Styled.ItemWrapper>
       <Line size={{ width: '1', height: isSmallSize ? '26' : '44' }} />
       <Styled.ItemWrapper onClick={onClickModal('price')}>
