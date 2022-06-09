@@ -43,15 +43,16 @@ const getCurrentMonthInfo = (year: number, month: number): MonthInfo => {
   };
 };
 
-const getMovedMonthInfo = (year: number, month: number, movedCount: number) => {
-  let currentMonth = month;
-  return (): MonthInfo => {
-    currentMonth += movedCount;
+const getMovedDate = (year: number, month: number, movedCount: number) => {
+  let currentMonth = month - 1;
+  return (isNext: boolean): { year: number; month: number } => {
+    currentMonth += isNext ? movedCount : -movedCount;
+    const newDate = new Date(year, currentMonth);
     return {
-      lastDay: getLastDay(year, currentMonth),
-      startDayOfWeek: getStartDayOfWeek(year, currentMonth),
+      year: newDate.getFullYear(),
+      month: newDate.getMonth() + 1,
     };
   };
 };
 
-export { getDateInfo, getTodayDateInfo, getCurrentMonthInfo, getMovedMonthInfo };
+export { getDateInfo, getTodayDateInfo, getMovedDate, getCurrentMonthInfo };
