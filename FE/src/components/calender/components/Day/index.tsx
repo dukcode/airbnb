@@ -43,23 +43,19 @@ const Day = ({
   isStart = false,
   info: { year, month, week, day },
 }: DayProps) => {
-  const { state, dispatch } = useContext(DateContext);
+  const { state, dispatch, setCheckedDate } = useContext(DateContext);
   const today = new Date(year, month - 1, day);
   const handleClickEvent = () => {
     if (isDisabled) return;
-    if (!state.period) {
-      setCheckIn(dispatch, today);
-      return;
-    }
 
-    const { checkIn } = state.period;
-
-    if (checkIn > today) {
+    if (!state.period?.checkIn || state?.period?.checkIn > today) {
       setCheckIn(dispatch, today);
+      if (setCheckedDate) setCheckedDate(today);
       return;
     }
 
     setCheckOut(dispatch, today);
+    if (setCheckedDate) setCheckedDate(undefined, today);
   };
 
   return (

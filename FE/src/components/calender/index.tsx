@@ -7,12 +7,20 @@ export interface ICalenderProps {
   year: number;
   month: number;
   isSlider: boolean;
-  filter: FilterType;
 }
 
-const CalenderApp = (props: ICalenderProps) => {
+interface ICalendarAppProps extends ICalenderProps {
+  filter: FilterType;
+  period: {
+    checkIn?: Date;
+    checkOut?: Date;
+  };
+  setCheckedDate: (checkIn?: Date, checkOut?: Date) => void;
+}
+
+const CalenderApp = ({ setCheckedDate, period, filter, ...props }: ICalendarAppProps) => {
   return (
-    <DateProvider>
+    <DateProvider period={period} filter={filter} setCheckedDate={setCheckedDate}>
       <CalenderPicker {...props} />
     </DateProvider>
   );
