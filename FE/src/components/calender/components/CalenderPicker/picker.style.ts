@@ -21,7 +21,8 @@ const IconWrapper = styled.div<countType>`
   align-items: flex-start;
   width: ${({ count }) => `${CALENDER_HEIGHT * count}px`};
   height: ${`${(CALENDER_HEIGHT * 90) / 100}px`};
-  z-index: -1;
+  z-index: 1;
+  pointer-events: none;
 `;
 
 export { CalenderWrapper, IconWrapper };
