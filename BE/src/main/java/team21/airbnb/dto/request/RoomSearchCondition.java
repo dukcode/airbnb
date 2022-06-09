@@ -14,13 +14,13 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @AllArgsConstructor
 public class RoomSearchCondition {
 
-    private Double westLongitude;
+    private Double westLatitude;
 
-    private Double northLatitude;
+    private Double northLongitude;
 
-    private Double eastLongitude;
+    private Double eastLatitude;
 
-    private Double southLatitude;
+    private Double southLongitude;
 
     @DateTimeFormat(iso = ISO.DATE)
     private LocalDate checkInDate;
@@ -40,4 +40,16 @@ public class RoomSearchCondition {
 
     private Integer numOfInfants;
 
+    public boolean isLocationNull() {
+        return westLatitude == null || northLongitude == null
+                || eastLatitude == null || southLongitude == null;
+    }
+
+    public boolean isChargeRangeNull() {
+        return minRoomCharge == null || maxRoomCharge == null;
+    }
+
+    public boolean isNumOfGuestsNull() {
+        return numOfGuests == null;
+    }
 }
