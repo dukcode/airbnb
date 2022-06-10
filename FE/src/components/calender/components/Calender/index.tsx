@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import * as Styled from 'components/calender/components/Calender/calender.style';
 import WeekList from 'components/calender/components/WeekList';
 import Title from 'components/calender/components/Title';

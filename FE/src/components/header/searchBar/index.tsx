@@ -1,4 +1,4 @@
-import React, { useReducer, useContext, useState } from 'react';
+import React, { useReducer, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import * as Styled from 'components/header/searchBar/searchBar.style';
@@ -8,12 +8,14 @@ import SearchIcon from 'components/Icons/SearchIcon';
 import { ActionType, reducer } from 'components/header/searchBar/contentReducer';
 import { guestCustomStyles } from 'components/header/searchBar/guestModal/guestModal.style';
 
+import roomListApis from 'apis/roomListApi';
 import { moneyToWon } from 'utils/utils';
 import { Context } from 'components/context/ModalContext';
 import PriceModal from 'components/header/searchBar/priceModal';
 import { customStyles } from 'components/header/searchBar/priceModal/PriceModalInfo.style';
 import GuestModal from 'components/header/searchBar/guestModal';
 import DateModal from 'components/header/searchBar/dateModal';
+import { GuestContext } from 'components/context/GuestModalContext';
 
 const initState = { checkIn: '날짜 입력', checkOut: '날짜 입력', price: '금액대 설정', guest: '게스트 추가' };
 
@@ -28,7 +30,10 @@ function SearchBar({ isSmallSize }) {
     lowPrice = 0,
     checkInDate,
     checkOutDate,
+    setFilteredData,
+    setIsClickSearch,
   } = useContext(Context);
+  const { adultCount, childrenCount } = useContext(GuestContext);
   const [state, dispatch] = useReducer(reducer, initState);
 
   const clickItem = (keyData: string, valueData: string) => () => {
@@ -45,6 +50,26 @@ function SearchBar({ isSmallSize }) {
   };
   const onClickModal = (title: string) => () => {
     modalOpenInfo[title](true);
+  };
+  const onClickSearch = () => {
+    const filteredDatas = {
+      checkInDate: '2022-06-23',
+      checkOutDate: '2022-06-30',
+      minRoomCharge: lowPrice,
+      maxRoomCharge: highPrice,
+      numOfGuests: guestCounts,
+      numOfAdults: adultCount,
+      numOfChildren: childrenCount,
+      numOfInfants: infantCounts,
+      page: 1,
+    };
+    const fetchRoomList = async () => {
+      const roomList = await roomListApis.getFilteredRooms({ filteredDatas });
+      setFilteredData(roomList);
+      console.log(roomList);
+    };
+    fetchRoomList();
+    setIsClickSearch(true);
   };
 
   const parsedDateToString = (date: Date | undefined) =>
@@ -75,7 +100,7 @@ function SearchBar({ isSmallSize }) {
         />
       </Styled.ItemWrapper>
       <GuestModal style={guestCustomStyles} />
-      <NavLink to="/searchResult">
+      <NavLink onClick={onClickSearch} to="/searchResult">
         <SearchIcon size={{ width: isSmallSize ? '29' : '40', height: isSmallSize ? '29' : '40' }} />
       </NavLink>
     </Styled.SearchBarWrapper>
