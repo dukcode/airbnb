@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import team21.airbnb.domain.Room;
 import team21.airbnb.dto.request.RoomSearchCondition;
 
 @Repository
 public class RoomRepository {
+
+    public static final int COUNT_LIMIT = 30;
 
     @PersistenceContext
     private EntityManager em;
@@ -39,26 +42,52 @@ public class RoomRepository {
         return room.getId();
     }
 
-    public List<Room> searchWithCondition(RoomSearchCondition condition) {
-        return em.createQuery(
-                        "select r from Room r where (not exists"
-                                + " (select b from Booking b"
-                                + " where (b.room = r) and not ((b.stayDate.checkOutDate < :checkInDate)"
-                                + " or (b.stayDate.checkInDate > :checkOutDate))))"
-                                + " and (r.roomCondition.maxNumOfGuests >= :numOfGuests)"
-                                + " and (r.roomChargeInfo.roomCharge between :minRoomCharge and :maxRoomCharge)"
-                                + " and (r.location.longitude between :minLongitude and :maxLongitude)"
-                                + " and (r.location.latitude between :minLatitude and :maxLatitude)",
-                        Room.class)
-                .setParameter("checkInDate", condition.getStayDate().getCheckInDate())
-                .setParameter("checkOutDate", condition.getStayDate().getCheckOutDate())
-                .setParameter("numOfGuests", condition.getGuestGroup().getNumOfGuests())
-                .setParameter("minRoomCharge", condition.getChargeRange().getMin())
-                .setParameter("maxRoomCharge", condition.getChargeRange().getMax())
-                .setParameter("minLongitude", condition.getNorthWestLocation().getLongitude())
-                .setParameter("maxLongitude", condition.getSouthEastLocation().getLongitude())
-                .setParameter("minLatitude", condition.getSouthEastLocation().getLatitude())
-                .setParameter("maxLatitude", condition.getNorthWestLocation().getLatitude())
+    public List<Room> searchWithCondition(RoomSearchCondition condition, Integer page) {
+        String jpql = "select r from Room r where (not exists"
+                + " (select b from Booking b"
+                + " where (b.room = r) and not ((b.stayDate.checkOutDate < :checkInDate)"
+                + " or (b.stayDate.checkInDate > :checkOutDate))))";
+
+        if (!condition.isNumOfGuestsNull()) {
+            jpql += " and (r.roomCondition.maxNumOfGuests >= :numOfGuests)";
+        }
+
+        if (!condition.isChargeRangeNull()) {
+            jpql += " and (r.roomChargeInfo.roomCharge between :minRoomCharge and :maxRoomCharge)";
+        }
+
+        if (!condition.isLocationNull()) {
+            jpql += " and (r.location.longitude between :minLongitude and :maxLongitude)";
+            jpql += " and (r.location.latitude between :minLatitude and :maxLatitude)";
+        }
+
+        jpql += " order by r.reviewStatus.count desc";
+
+        TypedQuery<Room> query = em.createQuery(jpql, Room.class)
+                .setParameter("checkInDate", condition.getCheckInDate())
+                .setParameter("checkOutDate", condition.getCheckOutDate());
+
+        if (!condition.isNumOfGuestsNull()) {
+            query = query.setParameter("numOfGuests", condition.getNumOfGuests());
+        }
+
+        if (!condition.isChargeRangeNull()) {
+            query = query
+                    .setParameter("minRoomCharge", condition.getMinRoomCharge())
+                    .setParameter("maxRoomCharge", condition.getMaxRoomCharge());
+        }
+
+        if (!condition.isLocationNull()) {
+            query = query
+                    .setParameter("minLongitude", condition.getSouthLongitude())
+                    .setParameter("maxLongitude", condition.getNorthLongitude())
+                    .setParameter("minLatitude", condition.getWestLatitude())
+                    .setParameter("maxLatitude", condition.getEastLatitude());
+        }
+
+        return query
+                .setFirstResult(COUNT_LIMIT * (page - 1))
+                .setMaxResults(COUNT_LIMIT)
                 .getResultList();
     }
 

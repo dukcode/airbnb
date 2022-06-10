@@ -10,55 +10,40 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team21.airbnb.domain.embeddable.GuestGroup;
-import team21.airbnb.domain.embeddable.Location;
 import team21.airbnb.domain.embeddable.StayDate;
 import team21.airbnb.dto.request.RoomSearchCondition;
-import team21.airbnb.dto.request.RoomSearchCondition.ChargeRange;
 import team21.airbnb.dto.response.RoomDetailResponse;
 import team21.airbnb.dto.response.RoomSearchResponse;
 import team21.airbnb.service.RoomService;
 
-@RestController
 @RequiredArgsConstructor
+@RestController
 public class RoomController {
 
     private final RoomService roomService;
 
     @GetMapping("/rooms/charges")
-    public List<Integer> getAvailableRoomCharges(@RequestParam LocalDate checkInDate,
-            @RequestParam LocalDate checkoutDate) {
-        return roomService.getAvailableRoomCharges(checkInDate, checkoutDate);
+    public List<Integer> getAvailableRoomCharges(
+            @RequestParam(value = "checkInDate", required = false)
+            @DateTimeFormat(iso = ISO.DATE) LocalDate checkInDate,
+            @RequestParam(value = "checkOutDate", required = false)
+            @DateTimeFormat(iso = ISO.DATE) LocalDate checkOutDate
+    ) {
+        return roomService.getAvailableRoomCharges(checkInDate, checkOutDate);
     }
 
     @GetMapping("/rooms")
-    public List<RoomSearchResponse> listRooms(
-            @RequestParam(value = "westLongitude") Double westLongitude,
-            @RequestParam(value = "northLatitude") Double northLatitude,
-            @RequestParam(value = "eastLongitude") Double eastLongitude,
-            @RequestParam(value = "southLatitude") Double southLatitude,
-            @RequestParam(value = "checkIn", required = false)
-            @DateTimeFormat(iso = ISO.DATE) LocalDate checkInDate,
-            @RequestParam(value = "checkOut", required = false)
-            @DateTimeFormat(iso = ISO.DATE) LocalDate checkOutDate,
-            @RequestParam(value = "minRoomCharge", required = false) Integer minRoomCharge,
-            @RequestParam(value = "maxRoomCharge", required = false) Integer maxRoomCharge,
-            @RequestParam(value = "adults", required = false) Integer numOfAdults,
-            @RequestParam(value = "children", required = false) Integer numOfChildren,
-            @RequestParam(value = "infants", required = false) Integer numOfInfants) {
+    public List<RoomSearchResponse> listRooms(RoomSearchCondition searchCondition, Integer page) {
+        System.out.println("request = " + searchCondition);
 
-        return roomService.searchRooms(new RoomSearchCondition(
-                new StayDate(checkInDate, checkOutDate),
-                new ChargeRange(minRoomCharge, maxRoomCharge),
-                new GuestGroup(numOfAdults, numOfChildren, numOfInfants),
-                new Location(northLatitude, westLongitude),
-                new Location(southLatitude, eastLongitude)));
+        return roomService.searchRooms(searchCondition, page);
     }
 
     @GetMapping("rooms/{id}")
     public RoomDetailResponse getRoomDetail(@PathVariable Long id,
-            @RequestParam(value = "checkIn", required = false)
+            @RequestParam(value = "checkInDate", required = false)
             @DateTimeFormat(iso = ISO.DATE) LocalDate checkInDate,
-            @RequestParam(value = "checkOut", required = false)
+            @RequestParam(value = "checkOutDate", required = false)
             @DateTimeFormat(iso = ISO.DATE) LocalDate checkOutDate,
             @RequestParam(value = "adults", required = false) Integer numOfAdults,
             @RequestParam(value = "children", required = false) Integer numOfChildren,

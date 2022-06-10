@@ -1,28 +1,55 @@
 package team21.airbnb.dto.request;
 
+import java.time.LocalDate;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import team21.airbnb.domain.embeddable.GuestGroup;
-import team21.airbnb.domain.embeddable.Location;
-import team21.airbnb.domain.embeddable.StayDate;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-@Getter
+@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 public class RoomSearchCondition {
 
-    private StayDate stayDate;
-    private ChargeRange chargeRange;
+    private Double westLatitude;
 
-    private GuestGroup guestGroup;
+    private Double northLongitude;
 
-    private Location northWestLocation;
-    private Location southEastLocation;
+    private Double eastLatitude;
 
-    @Getter
-    @AllArgsConstructor
-    public static class ChargeRange {
+    private Double southLongitude;
 
-        private Integer min;
-        private Integer max;
+    @DateTimeFormat(iso = ISO.DATE)
+    private LocalDate checkInDate;
+
+    @DateTimeFormat(iso = ISO.DATE)
+    private LocalDate checkOutDate;
+
+    private Integer minRoomCharge;
+
+    private Integer maxRoomCharge;
+
+    private Integer numOfGuests;
+
+    private Integer numOfAdults;
+
+    private Integer numOfChildren;
+
+    private Integer numOfInfants;
+
+    public boolean isLocationNull() {
+        return westLatitude == null || northLongitude == null
+                || eastLatitude == null || southLongitude == null;
+    }
+
+    public boolean isChargeRangeNull() {
+        return minRoomCharge == null || maxRoomCharge == null;
+    }
+
+    public boolean isNumOfGuestsNull() {
+        return numOfGuests == null;
     }
 }

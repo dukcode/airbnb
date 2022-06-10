@@ -23,7 +23,6 @@ import team21.airbnb.domain.embeddable.RoomChargeInformation;
 import team21.airbnb.domain.embeddable.RoomCondition;
 import team21.airbnb.domain.embeddable.StayDate;
 import team21.airbnb.dto.request.RoomSearchCondition;
-import team21.airbnb.dto.request.RoomSearchCondition.ChargeRange;
 import team21.airbnb.dto.response.RoomDetailResponse;
 import team21.airbnb.dto.response.RoomSearchResponse;
 import team21.airbnb.repository.BookingRepository;
@@ -37,6 +36,8 @@ class RoomServiceTest {
 
     @Autowired RoomRepository roomRepository;
     @Autowired BookingRepository bookingRepository;
+
+    private Long saveRoomId;
 
     @BeforeEach
     public void setUp() {
@@ -56,7 +57,7 @@ class RoomServiceTest {
                 new RoomCondition(3, 0, 1, 1),
                 new RoomChargeInformation(82953, 25996, 0.04),
                 new ReviewStatus(4.80, 127),
-                new Location(136.9896, 37.5499));
+                new Location(126.9896, 37.5499));
 
         Booking booking = new Booking(
                 BookingStatus.BOOKED,
@@ -65,7 +66,7 @@ class RoomServiceTest {
                 room,
                 null);
 
-        roomRepository.save(room);
+        saveRoomId = roomRepository.save(room);
         bookingRepository.save(booking);
     }
 
@@ -74,14 +75,20 @@ class RoomServiceTest {
     public void searchRoom() throws Exception {
         // given
         RoomSearchCondition condition = new RoomSearchCondition(
-                new StayDate(LocalDate.of(2022, 6, 10), LocalDate.of(2022, 6, 13)),
-                new ChargeRange(0, 1000000),
-                new GuestGroup(1, 1, 1)
-                , new Location(140.0, 30.0)
-                , new Location(130.0, 40.0));
+                120.0,
+                40.0,
+                130.0,
+                30.0,
+                LocalDate.of(2022, 6, 10),
+                LocalDate.of(2022, 6, 13),
+                0,
+                1000000,
+                3,
+                1, 1, 1
+        );
 
         // when
-        List<RoomSearchResponse> roomSearchResponses = roomService.searchRooms(condition);
+        List<RoomSearchResponse> roomSearchResponses = roomService.searchRooms(condition, 0);
 
         ObjectMapper objectMapper = new ObjectMapper();
         String s = objectMapper.writeValueAsString(roomSearchResponses);
@@ -93,7 +100,7 @@ class RoomServiceTest {
     @Test
     @DisplayName("room detail을 검색한다")
     public void searchRoomDetail() {
-        RoomDetailResponse roomDetail = roomService.getRoomDetail(1L,
+        RoomDetailResponse roomDetail = roomService.getRoomDetail(saveRoomId,
                 new StayDate(LocalDate.of(2022, 6, 10), LocalDate.of(2022, 6, 13)),
                 new GuestGroup(1, 1, 1));
         System.out.println(roomDetail);
