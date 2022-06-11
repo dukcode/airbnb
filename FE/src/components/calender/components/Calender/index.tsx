@@ -5,7 +5,7 @@ import Title from 'components/calender/components/Title';
 import Month from 'components/calender/components/Month';
 import { DateContext, FilterType } from 'components/calender/context';
 import { getCurrentMonthInfo } from 'components/calender/utils/dataUtils';
-import { dateUnit, Language } from 'components/calender/constants/dateData';
+import { DATE_UNIT, Language } from 'components/calender/constants/dateData';
 
 interface CalenderProps {
   count: number;
@@ -13,7 +13,7 @@ interface CalenderProps {
   month: number;
 }
 
-const { year: yearUnit, month: monthUnit } = dateUnit[Language.KOR];
+const { year: yearUnit, month: monthUnit } = DATE_UNIT[Language.KOR];
 const CalenderTitle = (year: number, month: number) => `${year}${yearUnit} ${month}${monthUnit}`;
 const getCurrentDate = (filter: FilterType, month: number, year: number, index: number) => {
   const date = new Date(year, month + index - 1);
