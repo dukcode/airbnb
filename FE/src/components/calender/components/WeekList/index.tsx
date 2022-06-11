@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Styled from 'components/calender/components/WeekList/weekList.style';
 import { Language, weekData } from 'components/calender/constants/dateData';
-import Text, { TextProps } from 'components/calender/components//Text';
+import Text, { TextProps } from 'components/calender/components/Text';
 
 export interface WeekListProps {
   width?: string;
@@ -21,7 +21,7 @@ const WeekList = ({ data, ...props }: WeekListProps) => {
       {data &&
         data.map((value) => {
           return (
-            <Styled.WeekListItem>
+            <Styled.WeekListItem key={value}>
               <Text {...textProps}>{value}</Text>
             </Styled.WeekListItem>
           );
