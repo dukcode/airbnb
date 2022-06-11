@@ -1,11 +1,10 @@
-import React, { useReducer, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import * as Styled from 'components/header/searchBar/searchBar.style';
 import Line from 'components/Icons/Line';
 import SearchBarItem from 'components/header/searchBar/searchBarItem';
 import SearchIcon from 'components/Icons/SearchIcon';
-import { ActionType, reducer } from 'components/header/searchBar/contentReducer';
 import { guestCustomStyles } from 'components/header/searchBar/guestModal/guestModal.style';
 
 import roomListApis from 'apis/roomListApi';
@@ -16,8 +15,6 @@ import { customStyles } from 'components/header/searchBar/priceModal/PriceModalI
 import GuestModal from 'components/header/searchBar/guestModal';
 import DateModal from 'components/header/searchBar/dateModal';
 import { GuestContext } from 'components/context/GuestModalContext';
-
-const initState = { checkIn: '날짜 입력', checkOut: '날짜 입력', price: '금액대 설정', guest: '게스트 추가' };
 
 function SearchBar({ isSmallSize }) {
   const {
@@ -34,14 +31,6 @@ function SearchBar({ isSmallSize }) {
     setIsClickSearch,
   } = useContext(Context);
   const { adultCount, childrenCount } = useContext(GuestContext);
-  const [state, dispatch] = useReducer(reducer, initState);
-
-  const clickItem = (keyData: string, valueData: string) => () => {
-    dispatch({
-      type: ActionType.SET_CONTENTS,
-      payload: { key: keyData, value: valueData },
-    });
-  };
 
   const modalOpenInfo = {
     date: setIsDateOpen,
@@ -66,7 +55,6 @@ function SearchBar({ isSmallSize }) {
     const fetchRoomList = async () => {
       const roomList = await roomListApis.getFilteredRooms({ filteredDatas });
       setFilteredData(roomList);
-      console.log(roomList);
     };
     fetchRoomList();
     setIsClickSearch(true);

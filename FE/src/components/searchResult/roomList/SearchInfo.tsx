@@ -7,7 +7,6 @@ import { moneyToWon } from 'utils/utils';
 function SearchInfo() {
   const { lowPrice = 0, highPrice = 0, guestCounts, infantCounts, filteredData } = useContext(Context);
 
-  console.log(filteredData);
   return (
     <Styled.SearchInfoWrapper>
       {`${filteredData.length}개 이상의 숙소 • 6월 9일 - 6월 18일 • ${moneyToWon(lowPrice)}~${moneyToWon(

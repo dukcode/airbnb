@@ -49,7 +49,6 @@ function Map() {
         center: centerCoors,
         zoom: zoomLvl,
       });
-      console.log(map.getBounds());
       const markers: any[] = [];
       map.addListener('zoom_changed', (e) => {
         setZoomLvl(map.getZoom());
