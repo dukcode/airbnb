@@ -8,13 +8,15 @@ import { getCurrentMonthInfo } from 'components/calender/utils/dataUtils';
 import { DATE_UNIT, Language } from 'components/calender/constants/dateData';
 
 interface CalenderProps {
-  count: number;
-  year: number;
-  month: number;
+  count?: number;
+  year?: number;
+  month?: number;
 }
 
 const { year: yearUnit, month: monthUnit } = DATE_UNIT[Language.KOR];
+
 const CalenderTitle = (year: number, month: number) => `${year}${yearUnit} ${month}${monthUnit}`;
+
 const getCurrentDate = (filter: FilterType, month: number, year: number, index: number) => {
   const date = new Date(year, month + index - 1);
   const [currentYear, currentMonth] = [date.getFullYear(), date.getMonth() + 1];
@@ -26,16 +28,15 @@ const getCurrentDate = (filter: FilterType, month: number, year: number, index: 
   };
 };
 
-const CalenderList = ({
-  count = 1,
-  year = new Date().getFullYear(),
-  month = new Date().getMonth() + 1,
-}: CalenderProps) => {
+const getMonthList = ({ count, year, month }: CalenderProps, filtered: FilterType) =>
+  Array(count)
+    .fill(0)
+    .map((_, index) => getCurrentDate(filtered, month as number, year as number, index));
+
+const CalenderList = (props: CalenderProps) => {
   const { state } = useContext(DateContext);
   const { filtered } = state?.filter || {};
-  const monthList = Array(count)
-    .fill(0)
-    .map((_, index) => getCurrentDate(filtered as FilterType, month, year, index));
+  const monthList = getMonthList(props, filtered as FilterType);
 
   return (
     <>
@@ -50,6 +51,12 @@ const CalenderList = ({
       ))}
     </>
   );
+};
+
+CalenderList.defaultProps = {
+  count: 1,
+  year: new Date().getFullYear(),
+  month: new Date().getMonth() + 1,
 };
 
 export default CalenderList;
