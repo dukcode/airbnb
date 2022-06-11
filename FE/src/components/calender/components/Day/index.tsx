@@ -65,13 +65,13 @@ const isFilteredDate = (checkIn: Date, checkOut: Date, filteredDate = {}) => {
   return false;
 };
 
-const Day = ({
+function Day({
   isCheckIn = false,
   isCheckOut = false,
   isIncluded = false,
   isDisabled = false,
   info: { year, month, week, day },
-}: DayProps) => {
+}: DayProps) {
   const { state, dispatch, setCheckedDate } = useContext(DateContext);
   const today = new Date(year, month - 1, day);
   const handleClickEvent = isDisabled
@@ -92,6 +92,6 @@ const Day = ({
       </Styled.Background>
     </Styled.TempWrapper>
   );
-};
+}
 
 export default Day;

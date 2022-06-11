@@ -10,9 +10,9 @@ export interface TitleProps {
   children?: React.ReactNode;
 }
 
-const Title = (props: TitleProps) => {
+function Title(props: TitleProps) {
   return <Styled.Heading {...props} />;
-};
+}
 
 Title.defaultProps = {
   level: 4,

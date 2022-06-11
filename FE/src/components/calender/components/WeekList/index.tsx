@@ -15,7 +15,7 @@ const textProps: TextProps = {
   fontWeight: 'bold',
 };
 
-const WeekList = ({ data, ...props }: WeekListProps) => {
+function WeekList({ data, ...props }: WeekListProps) {
   return (
     <Styled.WeekList {...props}>
       {data &&
@@ -28,7 +28,7 @@ const WeekList = ({ data, ...props }: WeekListProps) => {
         })}
     </Styled.WeekList>
   );
-};
+}
 
 WeekList.defaultProps = {
   width: '336px',

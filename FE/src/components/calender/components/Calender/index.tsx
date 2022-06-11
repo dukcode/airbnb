@@ -33,7 +33,7 @@ const getMonthList = ({ count, year, month }: CalenderProps, filtered: FilterTyp
     .fill(0)
     .map((_, index) => getCurrentDate(filtered, month as number, year as number, index));
 
-const CalenderList = (props: CalenderProps) => {
+function CalenderList(props: CalenderProps) {
   const { state } = useContext(DateContext);
   const { filtered } = state?.filter || {};
   const monthList = getMonthList(props, filtered as FilterType);
@@ -51,7 +51,7 @@ const CalenderList = (props: CalenderProps) => {
       ))}
     </>
   );
-};
+}
 
 CalenderList.defaultProps = {
   count: 1,

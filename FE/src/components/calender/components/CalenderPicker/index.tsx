@@ -5,20 +5,18 @@ import Icon, { IconType } from 'components/calender/components/Icons';
 import * as Styled from 'components/calender/components/CalenderPicker/picker.style';
 import CalenderList from 'components/calender/components/Calender';
 import { ICalenderProps } from 'components/calender';
-import { DateContext } from 'components/calender/context';
-import { initFilter } from 'components/calender/context/action';
 
 enum SliderDirection {
   'LEFT',
   'RIGHT',
 }
 
-const CalenderPicker = ({
+function CalenderPicker({
   count = 1,
   year = new Date().getFullYear(),
   month = new Date().getMonth() + 1,
   isSlider = true,
-}: ICalenderProps) => {
+}: ICalenderProps) {
   const [currentDate, setCurrentDate] = useState({ year, month });
   const getMovedDateInfo = getMovedDate(currentDate.year, currentDate.month, 1);
   const iconClickHandler = (direction: SliderDirection) => () => {
@@ -33,6 +31,6 @@ const CalenderPicker = ({
       {isSlider && <Icon type={IconType.ARROW_RIGHT} onClick={iconClickHandler(SliderDirection.RIGHT)} />}
     </Styled.CalenderWrapper>
   );
-};
+}
 
 export default CalenderPicker;

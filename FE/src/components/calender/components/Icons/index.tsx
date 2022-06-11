@@ -31,14 +31,14 @@ const IconWrapper = styled.div<DefaultIconProps>`
   height: ${`${(CALENDER_HEIGHT * 90) / 100}px`};
 `;
 
-const Icon = ({ type, onClick, ...props }: IconProps) => {
+function Icon({ type, onClick, ...props }: IconProps) {
   const IconComponent = IconComponents[type];
   return (
     <IconWrapper onClick={onClick}>
       <IconComponent {...props} />
     </IconWrapper>
   );
-};
+}
 
 Icon.defaultProps = {
   width: undefined,
