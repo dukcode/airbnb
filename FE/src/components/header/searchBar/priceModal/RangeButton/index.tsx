@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import { Context } from 'components/context/ModalContext';
-import * as Styled from 'components/header/searchBar/priceModal/RangeButton.style';
+import * as Styled from 'components/header/searchBar/priceModal/RangeButton/RangeButton.style';
 
 function RangeButton() {
   const { rightBtnValue = 100, leftBtnValue = 0, setLeftBtnValue, setRightBtnValue } = useContext(Context);
