@@ -5,6 +5,7 @@ import MinusIcon from 'components/Icons/MinusIcon';
 import PlusIcon from 'components/Icons/PlusIcon';
 import { Context } from 'components/context/ModalContext';
 import { GuestContext } from 'components/context/GuestModalContext';
+import * as Styled from 'components/header/searchBar/guestModal/guestInfo/guestInfo.style';
 
 interface GuestProps {
   type: string;
@@ -107,69 +108,22 @@ function GuestInfo({ type, description }: GuestProps) {
   }, [guestCount]);
 
   return (
-    <GuestInfoWrapper>
-      <GuestType>
-        <TypeTitle>{type}</TypeTitle>
-        <Description>{description}</Description>
-      </GuestType>
-      <GuestCount>
-        <MinusIconWrapper onClick={onDecrease}>
+    <Styled.GuestInfoWrapper>
+      <Styled.GuestType>
+        <Styled.TypeTitle>{type}</Styled.TypeTitle>
+        <Styled.Description>{description}</Styled.Description>
+      </Styled.GuestType>
+      <Styled.GuestCount>
+        <Styled.MinusIconWrapper onClick={onDecrease}>
           <MinusIcon color={minusBtnColor} />
-        </MinusIconWrapper>
-        <Count>{guestCount}</Count>
-        <PlusIconWrapper onClick={onIncrease}>
+        </Styled.MinusIconWrapper>
+        <Styled.Count>{guestCount}</Styled.Count>
+        <Styled.PlusIconWrapper onClick={onIncrease}>
           <PlusIcon color={plusBtnColor} />
-        </PlusIconWrapper>
-      </GuestCount>
-    </GuestInfoWrapper>
+        </Styled.PlusIconWrapper>
+      </Styled.GuestCount>
+    </Styled.GuestInfoWrapper>
   );
 }
-
-const MinusIconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`;
-const PlusIconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`;
-
-const GuestInfoWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-`;
-const GuestType = styled.div``;
-const Count = styled.div`
-  font-size: ${({ theme: { fontSize } }) => fontSize.large};
-  font-weight: ${({ theme: { fontWeight } }) => fontWeight.bold};
-  color: ${({ theme: { colors } }) => colors.grey1};
-  font-style: normal;
-  line-height: 29px;
-`;
-const TypeTitle = styled.div`
-  font-size: ${({ theme: { fontSize } }) => fontSize.medium};
-  font-weight: ${({ theme: { fontWeight } }) => fontWeight.bold};
-  color: ${({ theme: { colors } }) => colors.black};
-  font-style: normal;
-  line-height: 23px;
-`;
-
-const Description = styled.div`
-  font-size: ${({ theme: { fontSize } }) => fontSize.small};
-  font-weight: ${({ theme: { fontWeight } }) => fontWeight.normal};
-  color: ${({ theme: { colors } }) => colors.grey3};
-  font-style: normal;
-  line-height: 20px;
-`;
-
-const GuestCount = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 110px;
-`;
 
 export default GuestInfo;
