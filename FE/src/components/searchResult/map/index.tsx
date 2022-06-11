@@ -1,6 +1,6 @@
 /* eslint-disable no-return-assign */
 /* eslint-disable react/no-this-in-sfc */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 
 import { Context } from 'components/context/ModalContext';
 import { moneyToWon } from 'utils/utils';
@@ -33,6 +33,7 @@ function Map() {
     guestCounts,
     setFilteredData,
   } = useContext(Context);
+  const mapRef = useRef<HTMLDivElement>(null);
   const [centerCoors, setCenterCoors] = useState({ lat: 34.397, lng: 140.644 });
   const [zoomLvl, setZoomLvl] = useState(4);
   const { adultCount, childrenCount } = useContext(GuestContext);
@@ -45,7 +46,7 @@ function Map() {
   };
   useEffect(() => {
     function initMap(): void {
-      const map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+      const map = new google.maps.Map(mapRef.current, {
         center: centerCoors,
         zoom: zoomLvl,
       });
@@ -146,7 +147,7 @@ function Map() {
 
   return (
     <Styled.MapWrapper>
-      <Styled.SearchMap id="map" />
+      <Styled.SearchMap ref={mapRef} />
       <Styled.ControlDiv onClick={onClickReSearch}>
         <Styled.ControlUI>
           <Styled.ControlText>재검색하기</Styled.ControlText>
