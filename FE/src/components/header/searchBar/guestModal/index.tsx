@@ -3,19 +3,16 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 
 import { Context } from 'components/context/ModalContext';
-import GuestInfo from './GuestInfo';
+import GuestInfo from 'components/header/searchBar/guestModal/guestInfo';
+import { guestCustomStyles } from 'components/header/searchBar/guestModal/guestModal.style';
 
-interface ModalProps {
-  style: unknown;
-}
-
-function GuestModal({ style }: ModalProps) {
+function GuestModal() {
   const { isGuestOpen, setIsGuestOpen } = useContext(Context);
   const onCloseModal = () => {
     if (setIsGuestOpen) setIsGuestOpen(false);
   };
   return (
-    <Modal isOpen={isGuestOpen} style={style} onRequestClose={onCloseModal} ariaHideApp={false}>
+    <Modal isOpen={isGuestOpen} style={guestCustomStyles} onRequestClose={onCloseModal} ariaHideApp={false}>
       <ModalInfoWrapper>
         <GuestInfo type="성인" description="만 13세 이상" />
         <Line />

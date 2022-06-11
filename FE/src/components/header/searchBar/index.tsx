@@ -5,13 +5,11 @@ import * as Styled from 'components/header/searchBar/searchBar.style';
 import Line from 'components/Icons/Line';
 import SearchBarItem from 'components/header/searchBar/searchBarItem';
 import SearchIcon from 'components/Icons/SearchIcon';
-import { guestCustomStyles } from 'components/header/searchBar/guestModal/guestModal.style';
 
 import roomListApis from 'apis/roomListApi';
 import { moneyToWon } from 'utils/utils';
 import { Context } from 'components/context/ModalContext';
 import PriceModal from 'components/header/searchBar/priceModal';
-import { customStyles } from 'components/header/searchBar/priceModal/PriceModalInfo.style';
 import GuestModal from 'components/header/searchBar/guestModal';
 import DateModal from 'components/header/searchBar/dateModal';
 import { GuestContext } from 'components/context/GuestModalContext';
@@ -78,7 +76,7 @@ function SearchBar({ isSmallSize }) {
           contents={`${moneyToWon(Math.floor(lowPrice))} - ${moneyToWon(Math.floor(highPrice))}`}
         />
       </Styled.ItemWrapper>
-      <PriceModal style={customStyles} />
+      <PriceModal />
       <Line size={{ width: '1', height: isSmallSize ? '26' : '44' }} />
       <Styled.ItemWrapper onClick={onClickModal('guest')}>
         <SearchBarItem
@@ -87,7 +85,7 @@ function SearchBar({ isSmallSize }) {
           contents={`게스트${guestCounts}명, 유아${infantCounts}명`}
         />
       </Styled.ItemWrapper>
-      <GuestModal style={guestCustomStyles} />
+      <GuestModal />
       <NavLink onClick={onClickSearch} to="/searchResult">
         <SearchIcon size={{ width: isSmallSize ? '29' : '40', height: isSmallSize ? '29' : '40' }} />
       </NavLink>
