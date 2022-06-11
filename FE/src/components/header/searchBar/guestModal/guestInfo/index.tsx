@@ -1,5 +1,4 @@
 import React, { useReducer, useContext, useEffect } from 'react';
-import styled from 'styled-components';
 
 import MinusIcon from 'components/Icons/MinusIcon';
 import PlusIcon from 'components/Icons/PlusIcon';
@@ -12,83 +11,74 @@ interface GuestProps {
   description: string;
 }
 
-interface ReducerState {
-  guestCount: number;
-  minusBtnColor: string;
-  plusBtnColor: string;
-  defaultCount: number;
-}
-
-function countReducer(state: any, action: any) {
-  const { guestCount, minusBtnColor, defaultCount } = state;
-  switch (action.type) {
-    case 'INCREMENT':
-      if (guestCount < 7) {
-        return { ...state, guestCount: guestCount + 1, minusBtnColor: '#828282' };
-      }
-      if (guestCount === 7) {
-        return { ...state, plusBtnColor: '#E0E0E0', guestCount: guestCount + 1 };
-      }
-      return state;
-
-    case 'DECREMENT':
-      if (minusBtnColor === '#E0E0E0') return state;
-      if (guestCount > defaultCount + 1) {
-        return { ...state, guestCount: guestCount - 1, plusBtnColor: '#828282' };
-      }
-      if (guestCount === defaultCount + 1) {
-        return { ...state, guestCount: guestCount - 1, minusBtnColor: '#E0E0E0' };
-      }
-      break;
-    default:
-      return state;
+const increaseCount = (state) => {
+  const { guestCount } = state;
+  if (guestCount < 7) {
+    return { ...state, guestCount: guestCount + 1, minusBtnColor: '#828282' };
+  }
+  if (guestCount === 7) {
+    return { ...state, plusBtnColor: '#E0E0E0', guestCount: guestCount + 1 };
   }
   return state;
+};
+
+const decreaseCount = (state: any) => {
+  const { guestCount, minusBtnColor, defaultCount } = state;
+  if (minusBtnColor === '#E0E0E0') return state;
+  if (guestCount > defaultCount + 1) {
+    return { ...state, guestCount: guestCount - 1, plusBtnColor: '#828282' };
+  }
+  if (guestCount === defaultCount + 1) {
+    return { ...state, guestCount: guestCount - 1, minusBtnColor: '#E0E0E0' };
+  }
+  return state;
+};
+
+function countReducer(state: any, action: any) {
+  const actionFunc = {
+    INCREMENT: increaseCount,
+    DECREMENT: decreaseCount,
+  };
+
+  return actionFunc[action.type](state) || state;
 }
 
+const isActivated = (color: string) => {
+  return color === '#828282';
+};
+
 function GuestInfo({ type, description }: GuestProps) {
-  const { adultCount, setAdultCount, childrenCount, setChildrenCount, infantCount, setInfantCount } =
-    useContext(GuestContext);
+  const { adultCount, childrenCount, infantCount } = useContext(GuestContext);
+  const { setAdultCount, setChildrenCount, setInfantCount } = useContext(GuestContext);
+
   // eslint-disable-next-line no-nested-ternary
   const count = type === '성인' ? adultCount : type === '어린이' ? childrenCount : infantCount;
+
   const initialState = {
     defaultCount: count,
     guestCount: count,
     minusBtnColor: '#E0E0E0',
     plusBtnColor: '#828282',
   };
+
   const [state, dispatch] = useReducer(countReducer, initialState);
   const { guestCount, minusBtnColor, plusBtnColor } = state;
   const { setGuestCounts, setInfantCounts } = useContext(Context);
 
-  const onIncrease = () => {
-    dispatch({ type: 'INCREMENT' });
+  const handleOnClick = (dispatchType: string, btnColor: string) => () => {
+    const count = dispatchType === 'INCREMENT' ? 1 : -1;
+
+    dispatch({ type: dispatchType });
 
     if (!setInfantCounts || !setGuestCounts) {
       return;
     }
 
-    if (plusBtnColor === '#828282') {
+    if (isActivated(btnColor)) {
       if (type === '유아') {
-        setInfantCounts((prev: number) => prev + 1);
+        setInfantCounts((prev: number) => prev + count);
       } else {
-        setGuestCounts((prev: number) => prev + 1);
-      }
-    }
-  };
-
-  const onDecrease = () => {
-    dispatch({ type: 'DECREMENT' });
-
-    if (!setInfantCounts || !setGuestCounts) {
-      return;
-    }
-
-    if (minusBtnColor === '#828282') {
-      if (type === '유아') {
-        setInfantCounts((prev: number) => prev - 1);
-      } else {
-        setGuestCounts((prev: number) => prev - 1);
+        setGuestCounts((prev: number) => prev + count);
       }
     }
   };
@@ -114,11 +104,11 @@ function GuestInfo({ type, description }: GuestProps) {
         <Styled.Description>{description}</Styled.Description>
       </Styled.GuestType>
       <Styled.GuestCount>
-        <Styled.MinusIconWrapper onClick={onDecrease}>
+        <Styled.MinusIconWrapper onClick={handleOnClick('DECREMENT', minusBtnColor)}>
           <MinusIcon color={minusBtnColor} />
         </Styled.MinusIconWrapper>
         <Styled.Count>{guestCount}</Styled.Count>
-        <Styled.PlusIconWrapper onClick={onIncrease}>
+        <Styled.PlusIconWrapper onClick={handleOnClick('INCREMENT', plusBtnColor)}>
           <PlusIcon color={plusBtnColor} />
         </Styled.PlusIconWrapper>
       </Styled.GuestCount>
